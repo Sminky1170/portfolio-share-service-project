@@ -9,8 +9,8 @@ class Education {
     }
         
     // 교육 정보 id에 해당하는 교육 정보를 조회하는 메서드
-    static async findById({ user_id }) {
-        const education = await EducationModel.findOne({ id: user_id });
+    static async findById({ education_id }) {
+        const education = await EducationModel.findOne({ id: education_id });
         return education;
     }
     
