@@ -9,7 +9,7 @@ class Education {
     }
         
     // 교육 정보 id에 해당하는 교육 정보를 조회하는 메서드
-    static async findById({ education_id }) {
+    static async findOneById({ education_id }) {
         const education = await EducationModel.findOne({ id: education_id });
         return education;
     }
@@ -47,7 +47,7 @@ class Education {
 
     // 추가! user_id가 가지고 있는 모든 학력 정보들을 반환해주는 함수 (여러 정보를 반환할 수 있음)
     static async findAll() {
-        const educations = await EducationModel.find({id: userId})
+        const educations = await EducationModel.find({id: user_id})
         return educations
     }
 }

@@ -16,14 +16,14 @@ educationRouter.post("/educations", async (req, res, next) => {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { userId, school, major, degree } = req.body;
+    const { user_id, school, major, degree } = req.body;
 
     // // 유저의 id 가져오기: login_required 미들웨어에서 설정한 currentUserId 속성을 사용해 현재 로그인한 사용자의 ID 값을 가져옴
     // const user_id = req.currentUserId;
 
     // 위 데이터를 유저 db에 추가하기: educationService의 addEducation 함수를 호출해 해당 요청 사용자의 학력 정보를 추가함
     const newEducation = await educationService.addEducation({
-      userId,
+      user_id,
       school,
       major,
       degree,
@@ -70,12 +70,12 @@ educationRouter.put('/educations/:id', login_required, async (req, res, next) =>
   try {
     const education_id = req.params.id;
     const { school, major, degree } = req.body;
-    const userId = req.currentUserId;
+    const user_id = req.currentUserId;
 
     // 추출한 필드값을 setEducation 메소드의 인자로 전달하여 해당 학력 정보 업데이트
     const updatedEducation = await educationService.setEducation({
       education_id,
-      userId,
+      user_id,
       school,
       major,
       degree,
