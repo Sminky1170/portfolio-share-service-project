@@ -36,7 +36,7 @@ function EducationEditForm({ education, setEdit, setEducations }) {
         <Card className="mb-2">
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-          {/* 클래스네임, 컨트롤ID? */}
+          {/* 클래스네임, 컨트롤ID? 정해야하나*/}
             <Form.Group> 
               <Form.Control
                 type="text"
