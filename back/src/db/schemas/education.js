@@ -10,7 +10,7 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    schoolName: {
+    school: {
       type: String,
       required: true,
     },

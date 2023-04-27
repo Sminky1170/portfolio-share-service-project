@@ -39,11 +39,11 @@ class Education {
     //     return deletedEducation;
     // }
 
-    // 추가! obj정보가 포함된 정보를 반환해주는 함수 (하나의 정보만 반환)
-    static async findByObj({obj}) {
-        const findEducation = await EducationModel.find(obj)
-        return findEducation
-    }
+    // // 추가! obj정보가 포함된 정보를 반환해주는 함수 (하나의 정보만 반환)
+    // static async findByObj({obj}) {
+    //     const findEducation = await EducationModel.find(obj)
+    //     return findEducation
+    // }
 
     // 추가! user_id가 가지고 있는 모든 학력 정보들을 반환해주는 함수 (여러 정보를 반환할 수 있음)
     static async findAll() {

@@ -14,11 +14,11 @@ class educationService {
 
     // 먼저, DB에서 해당 유저의 학적 정보를 확인해서, 만약 추가하려는 학적 정보가 이미 DB에 존재할 경우
     const obj = { user_id, school, major, degree }
-    const find_education = await Education.findByObj(obj)
-    if(find_education) {
-        const errorMessage = "이미 존재하는 학적입니다. 다른 학적을 추가해주세요."
-        return {errorMessage}
-    }
+    // const find_education = await Education.findByObj(obj)
+    // if(find_education) {
+    //     const errorMessage = "이미 존재하는 학적입니다. 다른 학적을 추가해주세요."
+    //     return {errorMessage}
+    // }
 
     // DB에 추가하려는 학적 정보가 없다면, 새로 추가 가능
     const id = uuidv4();
