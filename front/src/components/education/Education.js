@@ -3,33 +3,25 @@ import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
 import * as Api from "../../api";
 
-function Education({ portfolioOwnerId, isEditable, isAddable }) {
+function Education({ key, education, setEducations, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-    Api.get("users", portfolioOwnerId).then((res) => setUser(res.data));
-  }, [portfolioOwnerId]);
 
   return (
     <>
-      {isAdding ? (
+      {isEditing ? (
         <EducationEditForm
           user={user}
           setIsEditing={setIsEditing}
-          setIsAdding={setIsAdding}
           isEditable={isEditable}
-          isAddable={isAddable}
+          education={education}
+          setEducations={setEducations}
         />
       ) : (
         <EducationCard
-          user={user}
-          setIsEditing={setIsEditing}
-          setIsAdding={setIsAdding}
+          education={education}
           isEditable={isEditable}
-          isAddable={isAddable}
+          setIsEditing={setIsEditing}
         />
       )}
     </>

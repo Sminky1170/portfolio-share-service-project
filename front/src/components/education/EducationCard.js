@@ -1,34 +1,32 @@
+import { useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
 
-function EducationCard({ user, setIsAdding, isAddable, isEditable }) {
-  return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "90%" }}>
-      <Card.Body>
-        <Row className="EducationTitle">
-          <Card.Title>학력</Card.Title>
-        </Row>
+function EducationCard({ education, isEditable, setIsEditing }) {
+  useEffect(() => {
+    console.log(education);
+  }, [education]);
 
+  return (
+    <Card className="mb-2">
+      <Card.Body>
+        {JSON.stringify(education)}
         <Row>
           <Col></Col>
-          {isEditable && <Col></Col>}
-        </Row>
-
-        {isAddable && (
-          <Col>
-            <Row className="mt-3 text-center text-info">
-              <Col sm={{ span: 20 }}>
+          {isEditable && (
+            <Col>
+              <div className="d-flex justify-content-end mr-2">
                 <Button
                   variant="primary"
-                  size="sm"
-                  onClick={() => setIsAdding(true)}
-                  style={{ display: "block", margin: "0 auto" }}
+                  type="button"
+                  className="me-3"
+                  onClick={() => setIsEditing(true)}
                 >
-                  +
+                  edit
                 </Button>
-              </Col>
-            </Row>
-          </Col>
-        )}
+              </div>
+            </Col>
+          )}
+        </Row>
       </Card.Body>
     </Card>
   );
