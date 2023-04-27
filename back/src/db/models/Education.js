@@ -47,7 +47,7 @@ class Education {
 
     // 추가! user_id가 가지고 있는 모든 학력 정보들을 반환해주는 함수 (여러 정보를 반환할 수 있음)
     static async findAll() {
-        const educations = await EducationModel.find({id: user_id})
+        const educations = await EducationModel.find({id: userId})
         return educations
     }
 }
