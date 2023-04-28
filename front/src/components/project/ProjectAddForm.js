@@ -4,8 +4,8 @@ import * as Api from "../../api";
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [title, setTitle] = useState("");
-  const [startdate, setStart_Date] = useState("");
-  const [enddate, setEnd_Date] = useState("");
+  const [startdate, setStartDate] = useState("");
+  const [enddate, setEndDate] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,22 +52,22 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
           <Form.Group>
             <Row>
-            <Col md="6">
-            <Form.Control
-              type="date"
-              placeholder="프로젝트 시작일 yyyy-mm-dd"
-              value={startdate}
-              onChange={(e) => setStart_Date(e.target.value)}
-            />
-            </Col>
-            <Col md="6">
-            <Form.Control
-              type="date"
-              placeholder="프로젝트 종료일 yyyy-mm-dd"
-              value={enddate}
-              onChange={(e) => setEnd_Date(e.target.value)}
-            />
-            </Col>
+              <Col md="6">
+                <Form.Control
+                  type="date"
+                  placeholder="프로젝트 시작일 yyyy-mm-dd"
+                  value={startdate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </Col>
+              <Col md="6">
+                <Form.Control
+                  type="date"
+                  placeholder="프로젝트 종료일 yyyy-mm-dd"
+                  value={enddate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </Col>
             </Row>
           </Form.Group>
 

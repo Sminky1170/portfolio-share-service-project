@@ -11,9 +11,11 @@ function Educations({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "educations/id" GET 요청, response의 data -> educations 세팅
-    Api.get(`educations/${portfolioOwnerId}`).then((res) =>
-      setEducations(res.data)
-    );
+    Api.get(`educations/${portfolioOwnerId}`)
+      .then((res) => setEducations(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
     // setEducations([
     //   {
     //     school: "1",

@@ -11,9 +11,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "Awards/id" GET 요청, response의 data -> Awards 세팅
-    Api.get(`Awards/${portfolioOwnerId}`).then((res) =>
-      setAwards(res.data)
-    );
+    Api.get(`Awards/${portfolioOwnerId}`).then((res) => setAwards(res.data));
     // setAwards([
     //   {
     //     school: "1",
@@ -29,11 +27,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
         <Card.Title>수상이력</Card.Title>
 
         {awards.map((award) => (
-          <Award
-            Award={award}
-            setAwards={setAwards}
-            isEditable={isEditable}
-          />
+          <Award Award={award} setAwards={setAwards} isEditable={isEditable} />
         ))}
         {isAdding && (
           <AwardAddForm

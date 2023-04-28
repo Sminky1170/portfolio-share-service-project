@@ -33,7 +33,7 @@ function CertificateAddForm({
       setIsAdding(false);
     } catch (error) {
       console.error(error);
-      alert("수상 정보 추가에 실패했습니다. 다시 시도해주세요.");
+      alert("자격증 정보 추가에 실패했습니다. 다시 시도해주세요.");
     }
 
     // "education/유저id" end-point로 get요청
@@ -54,7 +54,7 @@ function CertificateAddForm({
           <Form.Group>
             <Form.Control
               type="text"
-              placeholder="수상 이름을 입력하세요."
+              placeholder="자격증명을 입력하세요."
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -63,7 +63,7 @@ function CertificateAddForm({
           <Form.Group>
             <Form.Control
               type="?"
-              placeholder="주최기관"
+              placeholder="발행기관"
               value={organization}
               onChange={(e) => setOrganization(e.target.value)}
             />
@@ -72,9 +72,7 @@ function CertificateAddForm({
           <Form.Group>
             <Form.Control
               type="date"
-              placeholder="수상일자"
               value={date}
-              checked={date === "재학 중"}
               onChange={(e) => setDate(e.target.value)}
             />
           </Form.Group>

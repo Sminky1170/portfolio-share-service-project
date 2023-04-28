@@ -4,7 +4,6 @@ import { login_required } from "../middlewares/login_required";
 import { educationService } from "../services/educationService"; //확인필요
 const educationRouter = Router();
 
-
 // 학력 정보 추가 ("/educations" 확인필요)
 educationRouter.post("/educations", async (req, res, next) => {
   // @sindresorhus/is 패키지의 is.emptyObject 함수를 사용해 HTTP 요청의 body가 비어있는지 검사함(비었으면 에러 발생)
@@ -43,54 +42,57 @@ educationRouter.post("/educations", async (req, res, next) => {
   }
 });
 
-
-// 학력 정보 조회
-educationRouter.get("/educations/:id", async (req, res, next) => {
+/**
+ * 특정 유저의 모든 학력 조회
+ */
+educationRouter.get("/educations/:user_id", async (req, res, next) => {
   try {
     // 요청으로부터 학력id값 가져옴 (URL에서 id값 추출)
-    const education_id = req.params.id;
+    const { user_id } = req.params;
     // educationService.getEducation 메서드로 학력 ID에 대한 정보를 가져옴
-    const education = await educationService.getEducation({ education_id });
-    
+    const educations = await educationService.getEducations({ user_id });
+
     // 에러메시지 존재시 에러 던짐
-    if (education.errorMessage) {
-      throw new Error(education.errorMessage);
+    if (educations.errorMessage) {
+      throw new Error(educations.errorMessage);
     }
-    
     // 성공적으로 학력 정보 가져오면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-    res.status(200).json(education);
+    res.status(200).json(educations);
   } catch (error) {
     next(error);
   }
 });
-
 
 // 학력 정보 수정
-educationRouter.put('/educations/:id', login_required, async (req, res, next) => {
-  try {
-    const education_id = req.params.id;
-    const { school, major, degree } = req.body;
-    const user_id = req.currentUserId;
+educationRouter.put(
+  "/educations/:id",
+  login_required,
+  async (req, res, next) => {
+    try {
+      const education_id = req.params.id;
+      const { school, major, degree } = req.body;
+      const user_id = req.currentUserId;
 
-    // 추출한 필드값을 setEducation 메소드의 인자로 전달하여 해당 학력 정보 업데이트
-    const updatedEducation = await educationService.setEducation({
-      education_id,
-      user_id,
-      school,
-      major,
-      degree,
-    });
+      // 추출한 필드값을 setEducation 메소드의 인자로 전달하여 해당 학력 정보 업데이트
+      const updatedEducation = await educationService.setEducation({
+        education_id,
+        user_id,
+        school,
+        major,
+        degree,
+      });
 
-    // 에러메시지 존재시 에러 던짐
-    if (updatedEducation.errorMessage) {
-      throw new Error(updatedEducation.errorMessage);
+      // 에러메시지 존재시 에러 던짐
+      if (updatedEducation.errorMessage) {
+        throw new Error(updatedEducation.errorMessage);
+      }
+
+      // 성공하면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
+      res.status(200).json(updatedEducation);
+    } catch (error) {
+      next(error);
     }
-
-    // 성공하면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-    res.status(200).json(updatedEducation);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 export { educationRouter };

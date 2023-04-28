@@ -3,11 +3,7 @@ import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
 import * as Api from "../../api";
 
-<<<<<<< HEAD
-function Education({  education, setEducations, isEditable }) {
-=======
 function Education({ education, setEducations, isEditable }) {
->>>>>>> front_dev
   const [isEditing, setIsEditing] = useState(false);
 
   return (

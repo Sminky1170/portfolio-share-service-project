@@ -4,8 +4,8 @@ import * as Api from "../../api";
 
 function ProjectEditForm({ project, setIsEditing, setProjects }) {
   const [title, setTitle] = useState(project.title);
-  const [startdate, setStart_Date] = useState(project.startdate);
-  const [enddate, setEnd_Date] = useState(project.enddate);
+  const [startdate, setStartDate] = useState(project.startdate);
+  const [enddate, setEndDate] = useState(project.enddate);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,22 +48,22 @@ function ProjectEditForm({ project, setIsEditing, setProjects }) {
 
           <Form.Group>
             <Row>
-            <Col md="6">
-            <Form.Control
-              type="date"
-              placeholder="프로젝트 시작일"
-              value={startdate}
-              onChange={(e) => setStart_Date(e.target.value)}
-            />
-            </Col>
-            <Col md="6">
-            <Form.Control
-              type="date"
-              placeholder="프로젝트 종료일"
-              value={enddate}
-              onChange={(e) => setEnd_Date(e.target.value)}
-            />
-            </Col>
+              <Col md="6">
+                <Form.Control
+                  type="date"
+                  placeholder="프로젝트 시작일"
+                  value={startdate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </Col>
+              <Col md="6">
+                <Form.Control
+                  type="date"
+                  placeholder="프로젝트 종료일"
+                  value={enddate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </Col>
             </Row>
           </Form.Group>
 

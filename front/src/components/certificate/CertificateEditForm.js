@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function CertificateEditForm({ education, setIsEditing, setEducations }) {
+function CertificateEditForm({ certificate, setIsEditing, setCertifications }) {
   //useState로 학교이름(school) 상태를 생성함.
-  const [name, setName] = useState("");
+  const [name, setName] = useState(certificate.name);
   //useState로 전공(major) 상태를 생성함.
-  const [organization, setOrganization] = useState("");
+  const [organization, setOrganization] = useState(certificate.organization);
   //useState로  학위(degree)상태를 생성함.
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(certificate.date);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ function CertificateEditForm({ education, setIsEditing, setEducations }) {
     // });
     // // educationlist를 get요청 해야하는지?
     // const updateEducation = res.data;
-    const updateEducation = [
+    const updateCertificate = [
       {
         name,
         organization,
@@ -29,7 +29,7 @@ function CertificateEditForm({ education, setIsEditing, setEducations }) {
       },
     ];
     // 해당 유저 정보로 user을 세팅함.
-    setEducations(updateEducation);
+    setCertifications(updateCertificate);
 
     // isEditing을 false로 세팅함.--->??
     setIsEditing(false);
@@ -61,9 +61,7 @@ function CertificateEditForm({ education, setIsEditing, setEducations }) {
           <Form.Group>
             <Form.Control
               type="date"
-              placeholder="수상일자"
               value={date}
-              checked={date === "재학 중"}
               onChange={(e) => setDate(e.target.value)}
             />
           </Form.Group>

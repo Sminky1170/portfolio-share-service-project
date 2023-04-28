@@ -26,7 +26,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>학력</Card.Title>
+        <Card.Title>자격증</Card.Title>
 
         {certificates.map((certificate) => (
           <Certificate
