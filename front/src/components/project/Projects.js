@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-import Education from "./Education";
-import EducationAddForm from "./EducationAddForm";
+import Project from "./Project";
+import ProjectAddForm from "./ProjectAddForm";
 
-function Educations({ portfolioOwnerId, isEditable }) {
-  //useState로 educations, isAdding 상태 생성
-  const [educations, setEducations] = useState([]);
+function Projects({ portfolioOwnerId, isEditable }) {
+  //useState로 projects, isAdding 상태 생성
+  const [projects, setProjects] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    // "educations/id" GET 요청, response의 data -> educations 세팅
-    Api.get(`educations/${portfolioOwnerId}`).then((res) =>
-      setEducations(res.data)
+    // "projects/id" GET 요청, response의 data -> projects 세팅
+    Api.get(`projects/${portfolioOwnerId}`).then((res) =>
+      setProjects(res.data)
     );
-    // setEducations([
+    // setProjects([
     //   {
     //     school: "1",
     //     name: "elice",
@@ -26,19 +26,19 @@ function Educations({ portfolioOwnerId, isEditable }) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>학력</Card.Title>
+        <Card.Title>프로젝트</Card.Title>
 
-        {educations.map((education) => (
-          <Education
-            education={education}
-            setEducations={setEducations}
+        {projects.map((project) => (
+          <Project
+            project={project}
+            setProjects={setProjects}
             isEditable={isEditable}
           />
         ))}
         {isAdding && (
-          <EducationAddForm
+          <ProjectAddForm
             portfolioOwnerId={portfolioOwnerId}
-            setEducations={setEducations}
+            setProjects={setProjects}
             setIsAdding={setIsAdding}
           />
         )}
@@ -54,4 +54,4 @@ function Educations({ portfolioOwnerId, isEditable }) {
   );
 }
 
-export default Educations;
+export default Projects;
