@@ -6,6 +6,7 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import Educations from "./education/Educations";
+import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 
 function Portfolio() {
@@ -69,6 +70,11 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
+          <Awards
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+
           <Certificates
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
@@ -82,6 +88,7 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
+>>>>>>> front/src/components/Portfolio.js
           <div style={{ textAlign: "center" }}>
             수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
           </div>
