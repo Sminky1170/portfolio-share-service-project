@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import EducationCard from "./EducationCard";
-import EducationEditForm from "./EducationEditForm";
+import CertificateCard from "./CertificateCard";
+import CertificateEditForm from "./CertificateEditForm";
 import * as Api from "../../api";
 
-function Education({ education, setEducations, isEditable }) {
+function Certificate({ certificate, setCertificates, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       {isEditing ? (
-        <EducationEditForm
+        <CertificateEditForm
           setIsEditing={setIsEditing}
           isEditable={isEditable}
-          education={education}
-          setEducations={setEducations}
+          certificate={certificate}
+          setCertificates={setCertificates}
         />
       ) : (
-        <EducationCard
-          education={education}
+        <CertificateCard
+          certificate={certificate}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
         />
@@ -26,4 +26,4 @@ function Education({ education, setEducations, isEditable }) {
   );
 }
 
-export default Education;
+export default Certificate;

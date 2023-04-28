@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-import Education from "./Education";
-import EducationAddForm from "./EducationAddForm";
+import Certificate from "./Certificate";
+import CertificateAddForm from "./CertificateAddForm";
 
-function Educations({ portfolioOwnerId, isEditable }) {
+function Certificates({ portfolioOwnerId, isEditable }) {
   //useState로 educations, isAdding 상태 생성
-  const [educations, setEducations] = useState([]);
+  const [certificates, setCertificates] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     // "educations/id" GET 요청, response의 data -> educations 세팅
-    Api.get(`educations/${portfolioOwnerId}`).then((res) =>
-      setEducations(res.data)
+    Api.get(`certificate/${portfolioOwnerId}`).then((res) =>
+      setCertificates(res.data)
     );
     // setEducations([
     //   {
@@ -28,17 +28,17 @@ function Educations({ portfolioOwnerId, isEditable }) {
       <Card.Body>
         <Card.Title>학력</Card.Title>
 
-        {educations.map((education) => (
-          <Education
-            education={education}
-            setEducations={setEducations}
+        {certificates.map((certificate) => (
+          <Certificate
+            education={certificate}
+            setEducations={setCertificates}
             isEditable={isEditable}
           />
         ))}
         {isAdding && (
-          <EducationAddForm
+          <CertificateAddForm
             portfolioOwnerId={portfolioOwnerId}
-            setEducations={setEducations}
+            setEducations={setCertificates}
             setIsAdding={setIsAdding}
           />
         )}
@@ -54,4 +54,4 @@ function Educations({ portfolioOwnerId, isEditable }) {
   );
 }
 
-export default Educations;
+export default Certificates;
