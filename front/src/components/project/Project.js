@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
-import EducationCard from "./EducationCard";
-import EducationEditForm from "./EducationEditForm";
+import ProjectCard from "./ProjectCard";
+import ProjectEditForm from "./ProjectEditForm";
 import * as Api from "../../api";
 
-function Education({  education, setEducations, isEditable }) {
+function Project({ project, setProjects, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(null);
 
   return (
     <>
       {isEditing ? (
-        <EducationEditForm
+        <ProjectEditForm
           user={user}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
-          education={education}
-          setEducations={setEducations}
+          project={project}
+          setProjects={setProjects}
         />
       ) : (
-        <EducationCard
-          education={education}
+        <ProjectCard
+          project={project}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
         />
@@ -28,4 +28,4 @@ function Education({  education, setEducations, isEditable }) {
   );
 }
 
-export default Education;
+export default Project;
