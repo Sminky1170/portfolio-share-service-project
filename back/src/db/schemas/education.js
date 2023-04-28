@@ -2,7 +2,15 @@ import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
-    schoolName: {
+    id:{
+      type: String,
+      required: true,
+    },
+    user_id:{
+      type: String,
+      required: true,
+    },
+    school: {
       type: String,
       required: true,
     },
@@ -14,15 +22,6 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: false,
-      default: "설명이 아직 없습니다. 추가해 주세요.",
-    },
-    userId:{
-      type: String,
-      required: true,
-    }
   },
   {
     timestamps: true,
