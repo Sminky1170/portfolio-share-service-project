@@ -13,13 +13,23 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await Api.post(`educations/${portfolioOwnerId.id}`, {
-      school,
-      major,
-      degree,
-    });
+    try {
+      const res = await Api.post(`educations`, {
+        user_id: portfolioOwnerId,
+        school,
+        major,
+        degree,
+      });
+
+      const createdEducation = res.data;
+      setEducations((prevEducations) => [...prevEducations, createdEducation]);
+      setIsAdding(false);
+    } catch (error) {
+      console.error(error);
+      alert("학력 정보 추가에 실패했습니다. 다시 시도해주세요.");
+    }
+
     // "education/유저id" end-point로 get요청
-    const CreateEducation = res.data;
     // const CreateEducation = [
     //   {
     //     school,
@@ -28,9 +38,6 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
     //   },
     // ];
     // educations를 response -> data로 세팅
-    setEducations((preEducations) => [...preEducations, CreateEducation]);
-    // Add 모드가 끝남? addEducation을 false로 세팅
-    setIsAdding(false);
   };
 
   return (

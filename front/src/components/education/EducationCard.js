@@ -9,7 +9,12 @@ function EducationCard({ education, isEditable, setIsEditing }) {
   return (
     <Card className="mb-2">
       <Card.Body>
-        {JSON.stringify(education)}
+        <div>
+          {education.school}
+          <br />
+          {education.major}
+          {`(${education.degree})`}
+        </div>
         <Row>
           <Col></Col>
           {isEditable && (

@@ -11,16 +11,16 @@ function Educations({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "educations/id" GET 요청, response의 data -> educations 세팅
-    // Api.get("educations", portfolioOwnerId).then((res) =>
-    //   setEducations(res.data)
-    // );
-    setEducations([
-      {
-        school: "1",
-        name: "elice",
-        major: "computer",
-      },
-    ]);
+    Api.get(`educations/${portfolioOwnerId}`).then((res) =>
+      setEducations(res.data)
+    );
+    // setEducations([
+    //   {
+    //     school: "1",
+    //     name: "elice",
+    //     major: "computer",
+    //   },
+    // ]);
   }, [portfolioOwnerId]);
 
   return (
