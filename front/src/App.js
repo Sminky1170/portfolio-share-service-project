@@ -10,6 +10,7 @@ import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
 
+// 애플리케이션 전체에서 사용할 수 있도록 내보내는 React컨텍스트
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 

@@ -75,7 +75,6 @@ function Portfolio() {
           <div style={{ textAlign: "center" }}>
             수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
           </div>
-
         </Col>
       </Row>
     </Container>
