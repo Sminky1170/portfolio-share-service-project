@@ -31,3 +31,5 @@ const EducationSchema = new Schema(
 const EducationModel = model("Education", EducationSchema);
 
 export { EducationModel };
+
+export { EducationModel };
