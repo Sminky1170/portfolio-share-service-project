@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CertificateCard from "./CertificateCard";
 import CertificateEditForm from "./CertificateEditForm";
-import * as Api from "../../api";
 
-function Certificate({ certificate, setCertificates, isEditable }) {
+function Certificate({
+  certificateId,
+  certificate,
+  setCertificates,
+  isEditable,
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       {isEditing ? (
         <CertificateEditForm
+          certificateId={certificateId}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           certificate={certificate}
@@ -17,9 +22,11 @@ function Certificate({ certificate, setCertificates, isEditable }) {
         />
       ) : (
         <CertificateCard
+          certificateId={certificateId}
           certificate={certificate}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
+          setCertificates={setCertificates}
         />
       )}
     </>

@@ -3,25 +3,26 @@ import AwardCard from "./AwardCard";
 import AwardEditForm from "./AwardEditForm";
 import * as Api from "../../api";
 
-function Award({ Award, setAwards, isEditable }) {
+function Award({ awardId, award, setAwards, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState(null);
 
   return (
     <>
       {isEditing ? (
         <AwardEditForm
-          user={user}
+          awardId={awardId}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
-          Award={Award}
+          award={award}
           setAwards={setAwards}
         />
       ) : (
         <AwardCard
-          Award={Award}
+          awardId={awardId}
+          award={award}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
+          setAwards={setAwards}
         />
       )}
     </>

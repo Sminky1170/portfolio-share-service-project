@@ -32,6 +32,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
 
         {educations.map((education) => (
           <Education
+            educationId={education.id}
             education={education}
             setEducations={setEducations}
             isEditable={isEditable}

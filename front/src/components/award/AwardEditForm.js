@@ -2,29 +2,48 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function AwardEditForm({ award, setIsEditing, setAwards }) {
+function AwardEditForm({ awardId, award, setIsEditing, setAwards }) {
   //useState로 수상명(title) 상태를 생성함.
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(award.title);
   //useState로 수상기관(organization) 상태를 생성함.
-  const [organization, setOrganization] = useState("");
+  const [organization, setOrganization] = useState(award.organization);
   //useState로  수상일자(date)상태를 생성함.
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(award.date);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const updateAward = [
-      {
+    // "users/유저id" 엔드포인트로 PUT 요청함.-------users는 어디서 생겼?
+    try {
+      const res = await Api.put(`awards/${awardId}`, {
+        id: awardId,
         title,
         organization,
         date: new Date(date),
-      },
-    ];
-    // 해당 유저 정보로 user을 세팅함.
-    setAwards(updateAward);
+      });
 
-    // isEditing을 false로 세팅함.--->??
-    setIsEditing(false);
+      const updateAward = res.data;
+
+      setAwards((prevAwards) =>
+        prevAwards.map((award) => (award.id === awardId ? updateAward : award))
+      );
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+      alert("수상이력 수정에 실패했습니다. 다시 시도해주세요.");
+    }
+
+    // const updateAward = [
+    //   {
+    //     school,
+    //     major,
+    //     degree,
+    //   },
+    // ];
+    // // 해당 유저 정보로 user을 세팅함.
+    // setAwards(updateAward);
+
+    // // isEditing을 false로 세팅함.--->??
+    // setIsEditing(false);
   };
 
   return (
@@ -49,11 +68,12 @@ function AwardEditForm({ award, setIsEditing, setAwards }) {
               onChange={(e) => setOrganization(e.target.value)}
             />
           </Form.Group>
+
           <Form.Group>
             <Form.Control
               type="date"
               placeholder="수상일자"
-              value={date}
+              value={organization}
               onChange={(e) => setDate(e.target.value)}
             />
           </Form.Group>

@@ -3,15 +3,14 @@ import ProjectCard from "./ProjectCard";
 import ProjectEditForm from "./ProjectEditForm";
 import * as Api from "../../api";
 
-function Project({ project, setProjects, isEditable }) {
+function Project({ projectId, project, setProjects, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState(null);
 
   return (
     <>
       {isEditing ? (
         <ProjectEditForm
-          user={user}
+          projectId={projectId}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           project={project}
@@ -19,9 +18,11 @@ function Project({ project, setProjects, isEditable }) {
         />
       ) : (
         <ProjectCard
+          projectId={projectId}
           project={project}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
+          setProjects={setProjects}
         />
       )}
     </>

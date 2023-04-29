@@ -20,13 +20,12 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         organization,
         date: new Date(date),
       });
-
       const createdAward = res.data;
       setAwards((prevAwards) => [...prevAwards, createdAward]);
       setIsAdding(false);
     } catch (error) {
       console.error(error);
-      alert("수상 정보 추가에 실패했습니다. 다시 시도해주세요.");
+      alert("수상 이력 추가에 실패했습니다. 다시 시도해주세요.");
     }
   };
 

@@ -2,36 +2,35 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function ProjectEditForm({ project, setIsEditing, setProjects }) {
+function ProjectEditForm({ projectId, project, setIsEditing, setProjects }) {
   const [title, setTitle] = useState(project.title);
-  const [startdate, setStartDate] = useState(project.startdate);
-  const [enddate, setEndDate] = useState(project.enddate);
+  const [start_date, setStart_Date] = useState(project.start_date);
+  const [end_date, setEnd_Date] = useState(project.end_date);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // "users/유저id" 엔드포인트로 PUT 요청함.-------users는 어디서 생겼?
-    // const res = await Api.put(`projects/${project.id}`, {
-    //   //사람이름...?
-    //   school,
-    //   major,
-    //   degree,
-    // });
-    // // projectlist를 get요청 해야하는지?
-    // const updateProject = res.data;
-    const updateProject = [
-      {
+
+    try {
+      const res = await Api.put(`projects/${projectId}`, {
+        id: projectId,
         title,
-        startdate,
-        enddate,
-      },
-    ];
-    // 해당 유저 정보로 user을 세팅함.
-    setProjects(updateProject);
+        start_date,
+        end_date,
+      });
 
-    // isEditing을 false로 세팅함.--->??
-    setIsEditing(false);
+      const updateProject = res.data;
+
+      setProjects((prevProjects) =>
+        prevProjects.map((project) =>
+          project.id === projectId ? updateProject : project
+        )
+      );
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+      alert("프로젝트 수정에 실패했습니다. 다시 시도해주세요.");
+    }
   };
-
   return (
     <Card className="mb-2">
       <Card.Body>
@@ -52,16 +51,16 @@ function ProjectEditForm({ project, setIsEditing, setProjects }) {
                 <Form.Control
                   type="date"
                   placeholder="프로젝트 시작일"
-                  value={startdate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  value={start_date}
+                  onChange={(e) => setStart_Date(e.target.value)}
                 />
               </Col>
               <Col md="6">
                 <Form.Control
                   type="date"
                   placeholder="프로젝트 종료일"
-                  value={enddate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  value={end_date}
+                  onChange={(e) => setEnd_Date(e.target.value)}
                 />
               </Col>
             </Row>

@@ -28,16 +28,6 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
       console.error(error);
       alert("학력 정보 추가에 실패했습니다. 다시 시도해주세요.");
     }
-
-    // "education/유저id" end-point로 get요청
-    // const CreateEducation = [
-    //   {
-    //     school,
-    //     major,
-    //     degree,
-    //   },
-    // ];
-    // educations를 response -> data로 세팅
   };
 
   return (

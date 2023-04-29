@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationEditForm({ education, setIsEditing, setEducations }) {
+function EducationEditForm({
+  educationId,
+  education,
+  setIsEditing,
+  setEducations,
+}) {
   //useState로 학교이름(school) 상태를 생성함.
   const [school, setSchool] = useState(education.school);
   //useState로 전공(major) 상태를 생성함.
@@ -13,26 +18,39 @@ function EducationEditForm({ education, setIsEditing, setEducations }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // "users/유저id" 엔드포인트로 PUT 요청함.-------users는 어디서 생겼?
-    // const res = await Api.put(`educations/${education.id}`, {
-    //   //사람이름...?
-    //   school,
-    //   major,
-    //   degree,
-    // });
-    // // educationlist를 get요청 해야하는지?
-    // const updateEducation = res.data;
-    const updateEducation = [
-      {
+    try {
+      const res = await Api.put(`educations/${educationId}`, {
+        id: educationId,
         school,
         major,
         degree,
-      },
-    ];
-    // 해당 유저 정보로 user을 세팅함.
-    setEducations(updateEducation);
+      });
 
-    // isEditing을 false로 세팅함.--->??
-    setIsEditing(false);
+      const updateEducation = res.data;
+
+      setEducations((prevEducations) =>
+        prevEducations.map((education) =>
+          education.id === educationId ? updateEducation : education
+        )
+      );
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+      alert("학력 수정에 실패했습니다. 다시 시도해주세요.");
+    }
+
+    // const updateEducation = [
+    //   {
+    //     school,
+    //     major,
+    //     degree,
+    //   },
+    // ];
+    // // 해당 유저 정보로 user을 세팅함.
+    // setEducations(updateEducation);
+
+    // // isEditing을 false로 세팅함.--->??
+    // setIsEditing(false);
   };
 
   return (

@@ -5,22 +5,16 @@ import Certificate from "./Certificate";
 import CertificateAddForm from "./CertificateAddForm";
 
 function Certificates({ portfolioOwnerId, isEditable }) {
-  //useState로 educations, isAdding 상태 생성
+  //useState로 certificates, isAdding 상태 생성
   const [certificates, setCertificates] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    // "educations/id" GET 요청, response의 data -> educations 세팅
-    Api.get(`certificate/${portfolioOwnerId}`).then((res) =>
-      setCertificates(res.data)
-    );
-    // setEducations([
-    //   {
-    //     school: "1",
-    //     name: "elice",
-    //     major: "computer",
-    //   },
-    // ]);
+    Api.get(`certificates/${portfolioOwnerId}`)
+      .then((res) => setCertificates(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [portfolioOwnerId]);
 
   return (
@@ -30,15 +24,16 @@ function Certificates({ portfolioOwnerId, isEditable }) {
 
         {certificates.map((certificate) => (
           <Certificate
-            education={certificate}
-            setEducations={setCertificates}
+            certificateId={certificate.id}
+            certificate={certificate}
+            setCertificates={setCertificates}
             isEditable={isEditable}
           />
         ))}
         {isAdding && (
           <CertificateAddForm
             portfolioOwnerId={portfolioOwnerId}
-            setEducations={setCertificates}
+            setCertificates={setCertificates}
             setIsAdding={setIsAdding}
           />
         )}

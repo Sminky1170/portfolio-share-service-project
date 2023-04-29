@@ -5,20 +5,17 @@ import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
 
 function Awards({ portfolioOwnerId, isEditable }) {
-  //useState로 Awards, isAdding 상태 생성
+  //useState로 awards, isAdding 상태 생성
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    // "Awards/id" GET 요청, response의 data -> Awards 세팅
-    Api.get(`Awards/${portfolioOwnerId}`).then((res) => setAwards(res.data));
-    // setAwards([
-    //   {
-    //     school: "1",
-    //     name: "elice",
-    //     major: "computer",
-    //   },
-    // ]);
+    // "awards/id" GET 요청, response의 data -> awards 세팅
+    Api.get(`awards/${portfolioOwnerId}`)
+      .then((res) => setAwards(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [portfolioOwnerId]);
 
   return (
@@ -27,7 +24,12 @@ function Awards({ portfolioOwnerId, isEditable }) {
         <Card.Title>수상이력</Card.Title>
 
         {awards.map((award) => (
-          <Award Award={award} setAwards={setAwards} isEditable={isEditable} />
+          <Award
+            awardId={award.id}
+            award={award}
+            setAwards={setAwards}
+            isEditable={isEditable}
+          />
         ))}
         {isAdding && (
           <AwardAddForm

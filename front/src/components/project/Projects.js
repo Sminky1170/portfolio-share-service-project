@@ -11,16 +11,11 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "projects/id" GET 요청, response의 data -> projects 세팅
-    Api.get(`projects/${portfolioOwnerId}`).then((res) =>
-      setProjects(res.data)
-    );
-    // setProjects([
-    //   {
-    //     school: "1",
-    //     name: "elice",
-    //     major: "computer",
-    //   },
-    // ]);
+    Api.get(`projects/${portfolioOwnerId}`)
+      .then((res) => setProjects(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [portfolioOwnerId]);
 
   return (
@@ -30,6 +25,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
         {projects.map((project) => (
           <Project
+            projectId={project.id}
             project={project}
             setProjects={setProjects}
             isEditable={isEditable}
