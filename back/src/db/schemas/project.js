@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const EducationSchema = new Schema(
+const ProjectSchema = new Schema(
   {
     id: {
       type: String,
@@ -10,16 +10,16 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    school: {
+    title: {
       type: String,
       required: true,
     },
-    major: {
-      type: String,
+    start_date: {
+      type: Date,
       required: true,
     },
-    degree: {
-      type: String,
+    end_date: {
+      type: Date,
       required: true,
     },
   },
@@ -28,6 +28,6 @@ const EducationSchema = new Schema(
   }
 );
 
-const EducationModel = model("Education", EducationSchema);
+const ProjectModel = model("Project", ProjectSchema);
 
-export { EducationModel };
+export { ProjectModel };

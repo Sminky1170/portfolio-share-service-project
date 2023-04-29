@@ -56,8 +56,6 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
 
 userAuthRouter.get(
   "/userlist",
-  // login_required,
-  "/userlist",
   login_required,
   async function (req, res, next) {
     try {

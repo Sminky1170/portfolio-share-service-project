@@ -3,22 +3,14 @@ import { v4 as uuidv4 } from "uuid";
 
 class educationService {
   static async addEducation({ user_id, school, major, degree }) {
-    // // DB에서 해당 User를 찾는다.
-    // const user = await User.findOneById({ user_id });
-    // // 만약 DB에 해당 user_id가 존재하지 않을 경우,
-    // if (!user) {
-    //   const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-    //   return { errorMessage };
-    // }
-    // DB에 해당 user_id가 존재할 경우,
-
-    // 먼저, DB에서 해당 유저의 학적 정보를 확인해서, 만약 추가하려는 학적 정보가 이미 DB에 존재할 경우
     const obj = { user_id, school, major, degree };
-    // const find_education = await Education.findByObj(obj)
-    // if(find_education) {
-    //     const errorMessage = "이미 존재하는 학적입니다. 다른 학적을 추가해주세요."
-    //     return {errorMessage}
-    // }
+
+    const find_education = await Education.findByObj(obj);
+    if (find_education) {
+      const errorMessage =
+        "이미 존재하는 학적입니다. 다른 학적을 추가해주세요.";
+      return { errorMessage };
+    }
 
     // DB에 추가하려는 학적 정보가 없다면, 새로 추가 가능
     const id = uuidv4();
@@ -39,7 +31,7 @@ class educationService {
   }
 
   static async setEducation({ education_id, toUpdate }) {
-    const education = await Education.findById({ education_id });
+    let education = await Education.findOneById({ education_id });
     if (!education) {
       const errorMessage =
         "해당 학력 정보를 찾을 수 없습니다. 다시 한 번 확인해 주세요.";
@@ -75,9 +67,18 @@ class educationService {
         newValue,
       });
     }
-
     education.errorMessage = null;
     return education;
+  }
+
+  static async deleteEducation({ education_id }) {
+    let isDeleted = await Education.delete({ education_id });
+    console.log(isDeleted);
+    if (!isDeleted) {
+      const errorMessage = "삭제할 학력 정보가 없습니다.";
+      return { errorMessage };
+    }
+    return { result: "Success" };
   }
 }
 
