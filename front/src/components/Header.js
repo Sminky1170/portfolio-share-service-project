@@ -15,7 +15,7 @@ function Header() {
 
   // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+    // sessionStorage 에 저장했던  JWT토큰을 삭제함.
     sessionStorage.removeItem("userToken");
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
