@@ -48,5 +48,6 @@
     "modulePathIgnorePatterns": [
       "__config__"
     ]
-  }
+  },
+  "type": "module"
 }
