@@ -1,7 +1,7 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
-import { educationService } from "../services/educationService";
+import { login_required } from "../middlewares/login_required.js";
+import { educationService } from "../services/educationService.js";
 const educationRouter = Router();
 
 // 학력 정보 추가 ("/educations" 확인필요)

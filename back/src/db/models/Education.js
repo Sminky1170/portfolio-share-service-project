@@ -1,4 +1,4 @@
-import { EducationModel } from "../schemas/education";
+import { EducationModel } from "../schemas/education.js";
 
 // Education 클래스
 class Education {

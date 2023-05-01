@@ -1,4 +1,4 @@
-import { User, Award, Education } from "../db";
+import { User, Award } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 
 class awardService {

@@ -1,7 +1,7 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
-import { awardService } from "../services/awardService";
+import { login_required } from "../middlewares/login_required.js";
+import { awardService } from "../services/awardService.js";
 const awardRouter = Router();
 
 awardRouter.post("/awards", login_required, async (req, res, next) => {
