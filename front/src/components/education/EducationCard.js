@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
+import formatDate from "../../util/formatDate";
 
-function EducationCard({
-  educationId,
-  education,
-  isEditable,
-  setIsEditing,
-  setEducations,
-}) {
+function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
   useEffect(() => {
     console.log(education);
   }, [education]);
@@ -17,10 +12,10 @@ function EducationCard({
     e.preventDefault();
 
     try {
-      await Api.delete(`educations/${educationId}`);
+      await Api.delete(`educations/${education.id}`);
       // 삭제 성공한 경우, educations 상태 업데이트
       setEducations((prevEducations) =>
-        prevEducations.filter((e) => e.id !== educationId)
+        prevEducations.filter((e) => e.id !== education.id)
       );
     } catch (error) {
       console.error(error);

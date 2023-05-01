@@ -1,18 +1,9 @@
 import { useEffect } from "react";
 import { Card, Row, Form, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
+import formatDate from "../../util/formatDate";
 
 function CertificateCard({
-  certificateId,
   certificate,
   isEditable,
   setIsEditing,
@@ -26,10 +17,10 @@ function CertificateCard({
     e.preventDefault();
 
     try {
-      await Api.delete(`certificates/${certificateId}`);
+      await Api.delete(`certificates/${certificate.id}`);
       // 삭제 성공한 경우, certificates 상태 업데이트
       setCertificates((prevCertificates) =>
-        prevCertificates.filter((e) => e.id !== certificateId)
+        prevCertificates.filter((e) => e.id !== certificate.id)
       );
     } catch (error) {
       console.error(error);

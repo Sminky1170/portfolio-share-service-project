@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function ProjectEditForm({ projectId, project, setIsEditing, setProjects }) {
+function ProjectEditForm({ project, setIsEditing, setProjects }) {
   const [title, setTitle] = useState(project.title);
   const [start_date, setStart_Date] = useState(project.start_date);
   const [end_date, setEnd_Date] = useState(project.end_date);
@@ -11,8 +11,8 @@ function ProjectEditForm({ projectId, project, setIsEditing, setProjects }) {
     e.preventDefault();
 
     try {
-      const res = await Api.put(`projects/${projectId}`, {
-        id: projectId,
+      const res = await Api.put(`projects/${project.id}`, {
+        id: project.id,
         title,
         start_date,
         end_date,
@@ -21,9 +21,7 @@ function ProjectEditForm({ projectId, project, setIsEditing, setProjects }) {
       const updateProject = res.data;
 
       setProjects((prevProjects) =>
-        prevProjects.map((project) =>
-          project.id === projectId ? updateProject : project
-        )
+        prevProjects.map((e) => (e.id === project.id ? updateProject : e))
       );
       setIsEditing(false);
     } catch (error) {

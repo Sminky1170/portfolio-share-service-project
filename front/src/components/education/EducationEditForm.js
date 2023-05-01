@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationEditForm({
-  educationId,
-  education,
-  setIsEditing,
-  setEducations,
-}) {
+function EducationEditForm({ education, setIsEditing, setEducations }) {
   //useState로 학교이름(school) 상태를 생성함.
   const [school, setSchool] = useState(education.school);
   //useState로 전공(major) 상태를 생성함.
@@ -19,8 +14,8 @@ function EducationEditForm({
     e.preventDefault();
     // "users/유저id" 엔드포인트로 PUT 요청함.-------users는 어디서 생겼?
     try {
-      const res = await Api.put(`educations/${educationId}`, {
-        id: educationId,
+      const res = await Api.put(`educations/${education.id}`, {
+        id: education.id,
         school,
         major,
         degree,
@@ -29,9 +24,7 @@ function EducationEditForm({
       const updateEducation = res.data;
 
       setEducations((prevEducations) =>
-        prevEducations.map((education) =>
-          education.id === educationId ? updateEducation : education
-        )
+        prevEducations.map((e) => (e.id === education.id ? updateEducation : e))
       );
       setIsEditing(false);
     } catch (error) {

@@ -25,7 +25,6 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
         {projects.map((project) => (
           <Project
-            projectId={project.id}
             project={project}
             setProjects={setProjects}
             isEditable={isEditable}

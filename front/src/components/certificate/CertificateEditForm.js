@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function CertificateEditForm({
-  certificateId,
-  certificate,
-  setIsEditing,
-  setCertificates,
-}) {
+function CertificateEditForm({ certificate, setIsEditing, setCertificates }) {
   //useState로 자격증명(name) 상태를 생성함.
   const [name, setName] = useState(certificate.name);
   //useState로 기관(organization) 상태를 생성함.
@@ -22,8 +17,8 @@ function CertificateEditForm({
     e.preventDefault();
 
     try {
-      const res = await Api.put(`certificates/${certificateId}`, {
-        id: certificateId,
+      const res = await Api.put(`certificates/${certificate.id}`, {
+        id: certificate.id,
         name,
         organization,
         issue_date: new Date(issueDate),
@@ -34,7 +29,7 @@ function CertificateEditForm({
 
       setCertificates((prevCertificates) =>
         prevCertificates.map((certificate) =>
-          certificate.id === certificateId ? updateCertificate : certificate
+          certificate.id === certificate.id ? updateCertificate : certificate
         )
       );
       setIsEditing(false);

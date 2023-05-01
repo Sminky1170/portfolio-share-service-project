@@ -1,23 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
+import formatDate from "../../util/formatDate";
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
-function ProjectCard({
-  projectId,
-  project,
-  isEditable,
-  setIsEditing,
-  setProjects,
-}) {
+function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
   useEffect(() => {
     console.log(project);
   }, [project]);
@@ -26,10 +12,10 @@ function ProjectCard({
     p.preventDefault();
 
     try {
-      await Api.delete(`projects/${projectId}`);
+      await Api.delete(`projects/${project.id}`);
       // 삭제 성공한 경우, projects 상태 업데이트
       setProjects((prevProjects) =>
-        prevProjects.filter((p) => p.id !== projectId)
+        prevProjects.filter((p) => p.id !== project.id)
       );
     } catch (error) {
       console.error(error);

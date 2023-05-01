@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
+import formatDate from "../../util/formatDate";
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
-function AwardCard({ awardId, award, isEditable, setIsEditing, setAwards }) {
+function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
   useEffect(() => {
     console.log(award);
   }, [award]);
@@ -20,9 +12,9 @@ function AwardCard({ awardId, award, isEditable, setIsEditing, setAwards }) {
     e.preventDefault();
 
     try {
-      await Api.delete(`awards/${awardId}`);
+      await Api.delete(`awards/${award.id}`);
       // 삭제 성공한 경우, Awards 상태 업데이트
-      setAwards((prevAwards) => prevAwards.filter((e) => e.id !== awardId));
+      setAwards((prevAwards) => prevAwards.filter((e) => e.id !== award.id));
     } catch (error) {
       console.error(error);
       alert("수상이력 삭제에 실패했습니다. 다시 시도해주세요.");

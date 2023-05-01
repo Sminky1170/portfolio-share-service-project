@@ -24,7 +24,6 @@ function Certificates({ portfolioOwnerId, isEditable }) {
 
         {certificates.map((certificate) => (
           <Certificate
-            certificateId={certificate.id}
             certificate={certificate}
             setCertificates={setCertificates}
             isEditable={isEditable}
