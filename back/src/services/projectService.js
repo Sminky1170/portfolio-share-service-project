@@ -63,8 +63,7 @@ class projectService {
   }
 
   static async deleteProject({ project_id }) {
-    let isDeleted = await Project.delete({ project_id });
-    console.log(isDeleted);
+    let isDeleted = await Project.deleteById({ project_id });
     if (!isDeleted) {
       const errorMessage = "삭제할 프로젝트 정보가 없습니다.";
       return { errorMessage };

@@ -32,7 +32,7 @@ class Project {
   }
 
   // project_id에 해당하는 프로젝트 정보를 삭제하는 메서드
-  static async delete({ project_id }) {
+  static async deleteById({ project_id }) {
     // id가 project_id인 프로젝트 정보를 찾아서 삭제하고, 삭제한 프로젝트 정보를 반환한다.
     const deletedProject = await ProjectModel.deleteOne({ id: project_id });
     console.log(deletedProject);

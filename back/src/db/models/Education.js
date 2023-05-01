@@ -31,7 +31,7 @@ class Education {
     );
     return updatedEducation;
   }
-  static async delete({ education_id }) {
+  static async deleteById({ education_id }) {
     const deletedEducation = await EducationModel.deleteOne({
       id: education_id,
     });

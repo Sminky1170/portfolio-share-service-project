@@ -19,7 +19,7 @@ awardRouter.post("/awards", login_required, async (req, res, next) => {
       organization,
       date,
     });
-    res.status(201).json(newAward);
+    return res.status(201).json(newAward);
   } catch (error) {
     next(error);
   }
@@ -33,7 +33,7 @@ awardRouter.get("/awards/:user_id", login_required, async (req, res, next) => {
     if (award.errorMessage) {
       throw new Error(award.errorMessage);
     }
-    res.status(200).json(award);
+    return res.status(200).json(award);
   } catch (error) {
     next(error);
   }
@@ -41,12 +41,10 @@ awardRouter.get("/awards/:user_id", login_required, async (req, res, next) => {
 
 awardRouter.put("/awards/:id", login_required, async (req, res, next) => {
   try {
-    let award_id = req.params.id;
+    const award_id = req.params.id;
 
-    const title = req.body.title;
-    const organization = req.body.organization;
-    const date = req.body.date;
-
+    const {title, organization, date} = req.body
+    
     const toUpdate = { title, organization, date };
 
     const updatedAward = await awardService.setAward({
@@ -58,7 +56,7 @@ awardRouter.put("/awards/:id", login_required, async (req, res, next) => {
       throw new Error(updatedAward.errorMessage);
     }
 
-    res.status(200).json(updatedAward);
+    return res.status(200).json(updatedAward);
   } catch (error) {
     next(error);
   }
@@ -71,7 +69,7 @@ awardRouter.delete("/awards/:id", login_required, async (req, res, next) => {
     if (result.errorMessage) {
       throw new Error(result.errorMessage);
     }
-    res.status(200).send(result);
+    return res.status(200).send(result);
   } catch (err) {
     next(err);
   }

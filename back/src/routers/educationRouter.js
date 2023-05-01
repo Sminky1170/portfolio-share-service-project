@@ -32,7 +32,7 @@ educationRouter.post("/educations", login_required, async (req, res, next) => {
 
     // 성공적인 HTTP 응답을 생성. status(201)로 201 Created 상태코드를, json()으로 newEducation 객체를 JSON 형태로 반환
     // 에러 발생시 next함수로 다음 미들웨어에 에러 객체를 던짐
-    res.status(201).json(newEducation);
+    return res.status(201).json(newEducation);
   } catch (error) {
     next(error);
   }
@@ -55,7 +55,7 @@ educationRouter.get(
       }
 
       // 성공적으로 학력 정보 가져오면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-      res.status(200).json(education);
+      return res.status(200).json(education);
     } catch (error) {
       next(error);
     }
@@ -68,11 +68,9 @@ educationRouter.put(
   login_required,
   async (req, res, next) => {
     try {
-      let education_id = req.params.id;
+      const education_id = req.params.id;
 
-      const school = req.body.school;
-      const major = req.body.major;
-      const degree = req.body.degree;
+      const {school, major, degree} = req.body
 
       const toUpdate = { school, major, degree };
 
@@ -87,7 +85,7 @@ educationRouter.put(
       }
 
       // 성공하면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-      res.status(200).json(updatedEducation);
+      return res.status(200).json(updatedEducation);
     } catch (error) {
       next(error);
     }
@@ -104,7 +102,7 @@ educationRouter.delete(
       if (result.errorMessage) {
         throw new Error(result.errorMessage);
       }
-      res.status(200).send(result);
+      return res.status(200).send(result);
     } catch (err) {
       next(err);
     }

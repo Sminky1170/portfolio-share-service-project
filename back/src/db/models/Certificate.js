@@ -24,7 +24,7 @@ class Certificate {
     return updatedCertificate;
   }
 
-  static async delete({ certificate_id }) {
+  static async deleteById({ certificate_id }) {
     const deletedCertificate = await CertificateModel.deleteOne({
       id: certificate_id,
     });

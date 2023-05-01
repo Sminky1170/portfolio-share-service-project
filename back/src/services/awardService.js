@@ -46,8 +46,7 @@ class awardService {
   }
 
   static async deleteAward({ award_id }) {
-    let isDeleted = await Award.delete({ award_id });
-    console.log(isDeleted);
+    let isDeleted = await Award.deleteById({ award_id });
     if (!isDeleted) {
       const errorMessage = "삭제할 수상 정보가 없습니다.";
       return { errorMessage };
