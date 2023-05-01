@@ -24,10 +24,8 @@ class Certificate {
     return updatedCertificate;
   }
 
-  static async delete({ certificate_id }) {
-    const deletedCertificate = await CertificateModel.deleteOne({
-      id: certificate_id,
-    });
+  static async deleteById({ certificate_id }) {
+    const deletedCertificate = await CertificateModel.deleteOne({ id: certificate_id });
     const isCompleteDeleted = deletedCertificate.deletedCount === 1;
     return isCompleteDeleted;
   }

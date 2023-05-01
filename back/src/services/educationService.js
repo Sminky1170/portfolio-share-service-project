@@ -1,4 +1,4 @@
-import { User, Education } from "../db";
+import { User, Education } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 
 class educationService {
@@ -72,8 +72,7 @@ class educationService {
   }
 
   static async deleteEducation({ education_id }) {
-    let isDeleted = await Education.delete({ education_id });
-    console.log(isDeleted);
+    let isDeleted = await Education.deleteById({ education_id });
     if (!isDeleted) {
       const errorMessage = "삭제할 학력 정보가 없습니다.";
       return { errorMessage };

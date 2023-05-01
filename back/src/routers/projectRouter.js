@@ -25,7 +25,7 @@ projectRouter.post("/projects", async (req, res, next) => {
       end_date,
     });
 
-    res.status(201).json(newProject);
+    return res.status(201).json(newProject);
   } catch (error) {
     next(error);
   }
@@ -48,7 +48,7 @@ projectRouter.get(
       }
 
       // 성공적으로 학력 정보 가져오면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-      res.status(200).json(project);
+      return res.status(200).json(project);
     } catch (error) {
       next(error);
     }
@@ -58,11 +58,9 @@ projectRouter.get(
 // 학력 정보 수정
 projectRouter.put("/projects/:id", login_required, async (req, res, next) => {
   try {
-    let project_id = req.params.id;
+    const project_id = req.params.id;
 
-    const title = req.body.title;
-    const start_date = req.body.start_date;
-    const end_date = req.body.end_date;
+    const {title, start_date, end_date} = req.body
 
     const toUpdate = { title, start_date, end_date };
 
@@ -78,7 +76,7 @@ projectRouter.put("/projects/:id", login_required, async (req, res, next) => {
     }
 
     // 성공하면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-    res.status(200).json(updatedProject);
+    return res.status(200).json(updatedProject);
   } catch (error) {
     next(error);
   }
@@ -96,7 +94,7 @@ projectRouter.delete(
       if (result.errorMessage) {
         throw new Error(result.errorMessage);
       }
-      res.status(200).send(result);
+       return res.status(200).send(result);
     } catch (err) {
       next(err);
     }

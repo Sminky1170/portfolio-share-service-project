@@ -24,7 +24,7 @@ certificateRouter.post("/certificates", async (req, res, next) => {
       expiration_date,
     });
 
-    res.status(201).json(newCertificate);
+    return res.status(201).json(newCertificate);
   } catch (error) {
     next(error);
   }
@@ -42,7 +42,7 @@ certificateRouter.get(
         throw new Error(certificate.errorMessage);
       }
 
-      res.status(200).json(certificate);
+      return res.status(200).json(certificate);
     } catch (error) {
       next(error);
     }
@@ -54,12 +54,9 @@ certificateRouter.put(
   login_required,
   async (req, res, next) => {
     try {
-      let certificate_id = req.params.id;
+      const certificate_id = req.params.id;
 
-      const name = req.body.name;
-      const organization = req.body.organization;
-      const issue_date = req.body.issue_date;
-      const expiration_date = req.body.expiration_date;
+      const {name, organization, issue_date, expiration_date} = req.body
 
       const toUpdate = { name, organization, issue_date, expiration_date };
 
@@ -74,7 +71,7 @@ certificateRouter.put(
       }
 
       // 성공하면 HTTP응답코드(200)와 함께 응답, 에러 발생시 next로 미들웨어 함수로 에러 던짐
-      res.status(200).json(updatedCertificate);
+      return res.status(200).json(updatedCertificate);
     } catch (error) {
       next(error);
     }
@@ -94,7 +91,7 @@ certificateRouter.delete(
       if (result.errorMessage) {
         throw new Error(result.errorMessage);
       }
-      res.status(200).send(result);
+      return res.status(200).send(result);
     } catch (err) {
       next(err);
     }

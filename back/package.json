@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.16.4",
     "babel-cli": "^6.26.0",
     "dotenv": "^16.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.22"
   },
   "jest": {
     "testEnvironment": "node",
@@ -48,5 +48,6 @@
     "modulePathIgnorePatterns": [
       "__config__"
     ]
-  }
+  },
+  "type": "module"
 }
