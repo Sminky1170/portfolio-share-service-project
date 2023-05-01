@@ -32,10 +32,7 @@ class Education {
     return updatedEducation;
   }
   static async deleteById({ education_id }) {
-    const deletedEducation = await EducationModel.deleteOne({
-      id: education_id,
-    });
-    console.log(deletedEducation);
+    const deletedEducation = await EducationModel.deleteOne({ id: education_id });
     const isCompleteDeleted = deletedEducation.deletedCount === 1;
     return isCompleteDeleted;
   }

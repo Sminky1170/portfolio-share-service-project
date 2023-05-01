@@ -4,7 +4,7 @@ import { login_required } from "../middlewares/login_required.js";
 import { educationService } from "../services/educationService.js";
 const educationRouter = Router();
 
-// 학력 정보 추가 ("/educations" 확인필요)
+// 학력 정보 추가
 educationRouter.post("/educations", login_required, async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
