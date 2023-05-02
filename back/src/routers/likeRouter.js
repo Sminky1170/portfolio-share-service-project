@@ -5,7 +5,8 @@ import { likeService } from "../services/likeService.js";
 import { userAuthService } from "../services/userService.js"
 const likeRouter = Router();
 
-likeRouter.post("/likes", async function (req, res, next) {
+// 로그인한 사용자가 특정 사용자의 포트폴리오에 좋아요 추가 및 삭제
+likeRouter.post("/likes", login_required, async function (req, res, next) {
   try {
     const portfolio_id = req.currentUserId;
     const { user_id } = req.body;
@@ -38,7 +39,8 @@ likeRouter.post("/likes", async function (req, res, next) {
   }
 });
 
-likeRouter.get("/likes/:portfolio_id", async function (req, res, next) {
+// 특정 포트폴리오에 좋아요한 사용자 리스트 반환
+likeRouter.get("/likes/:portfolio_id", login_required, async function (req, res, next) {
   try {
     const currentUserInfo = await userAuthService.getUserInfo({
       user_id: req.currentUserId,
@@ -51,7 +53,8 @@ likeRouter.get("/likes/:portfolio_id", async function (req, res, next) {
   }
 });
 
-likeRouter.get("/likescount/:user_id", async function (req, res, next) {
+// 특정 사용자가 받은 총 좋아요 갯수를 반환
+likeRouter.get("/likescount/:user_id", login_required, async function (req, res, next) {
   try {
     const { user_id } = req.params;
     const counts = await likeService.likeCount({ user_id });

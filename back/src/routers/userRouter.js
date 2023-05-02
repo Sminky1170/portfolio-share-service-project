@@ -100,7 +100,7 @@ userAuthRouter.put(
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
-      const password = req.body.password ?? null;
+      // const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
       const toUpdate = { name, email, password, description };

@@ -1,8 +1,8 @@
 import { LikeModel } from "../schemas/like.js";
 
-class like {
+class Like {
   // 좋아요 생성
-  static async create({ newLike }) {
+  static async createLike({ newLike }) {
     const createdNewLike = await LikeModel.create(newLike);
     return createdNewLike;
   }
