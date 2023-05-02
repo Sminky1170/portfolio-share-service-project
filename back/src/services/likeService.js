@@ -1,34 +1,30 @@
 import { User , Like } from "../db/index.js";
 
-class likeService {
-  //좋아요 추가 (user_id, portfolio_id 둘다 입력되어야 함)
-  static async addLike({ user_id, portfolio_id }) {
-    const newLike = { user_id, portfolio_id };
-
-    if (!user_id || !portfolio_id) {
-      throw new Error("입력정보 없음");
-    }
-
-    const likeUp = await Like.createLike({ newLike });
-    likeUp.errorMessage = null;
-
-    return likeUp;
+class LikeService {
+  // 좋아요 생성
+  static async createLike({ following_user_id, followed_user_id }) {
+    const newLike = { following_user_id, followed_user_id };
+    const createdLike = await Like.createLike({ newLike });
+    return createdLike;
   }
-  // 특정 사용자의 좋아요 갯수 반환
-  static async likeCount({ user_id }) {
-    const counts = await Like.findByUserIdCount({ user_id });
-    return counts;
+
+  // 좋아요 삭제
+  static async deleteLike({ following_user_id, followed_user_id }) {
+    const deleteResult = await Like.deleteLike({ following_user_id, followed_user_id });
+    return deleteResult.deletedCount > 0;
   }
-  // 특정 사용자가 특정 포트폴리오에 좋아요 눌렀는지 확인
-  static async findPortfolioId({ user_id, portfolio_id }) {
-    const foundlike = await Like.findByPortfolioId({ user_id, portfolio_id });
-    return foundlike;
+
+  // 로그인한 유저가 좋아요한 특정 유저 조회
+  static async getLikesByFollowingUserId({ following_user_id }) {
+    const likes = await Like.findByFollowingUserId({ following_user_id });
+    return likes;
   }
-  // 특정 사용자가 특정 포트폴리오에 좋아요 취소
-  static async portfolioUnlike({ user_id, portfolio_id }) {
-    const unlike = await Like.deleteById({ user_id, portfolio_id });
-    return unlike;
+
+  // 특정 유저를 좋아요한 유저 조회
+  static async getLikesByFollowedUserId({ followed_user_id }) {
+    const likes = await Like.findByFollowedUserId({ followed_user_id });
+    return likes;
   }
 }
 
-export { likeService };
+export { LikeService };

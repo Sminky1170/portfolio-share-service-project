@@ -3,11 +3,11 @@ const { Schema, model } = pkg;
 
 const LikeSchema = new Schema(
   {
-    user_id: {
+    following_user_id: {
       type: String,
       required: true,
     },
-    portfolio_id:{
+    followed_user_id:{
       type: String,
       required: true,
     },
