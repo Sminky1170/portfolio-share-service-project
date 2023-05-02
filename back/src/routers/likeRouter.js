@@ -6,9 +6,9 @@ import { userAuthService } from "../services/userService.js"
 const likeRouter = Router();
 
 // 로그인한 사용자가 특정 사용자의 포트폴리오에 좋아요 추가 및 삭제
-likeRouter.post("/likes", /*login_required,*/ async function (req, res, next) {
+likeRouter.post("/likes/:user_id", /*login_required,*/ async function (req, res, next) {
   try {
-    const user_id = req.currentUserId;
+    const { user_id } = req.params;
     const { portfolio_id } = req.body;
     const currentUserInfo = await userAuthService.getUserInfo({ user_id });
 
@@ -29,7 +29,7 @@ likeRouter.post("/likes", /*login_required,*/ async function (req, res, next) {
       }
       return res.status(201).json(likeAdd);
     } else if (like) {
-      const result = await likeService.PortfolioUnlike({ user_id, portfolio_id });
+      const result = await likeService.portfolioUnlike({ user_id, portfolio_id });
       return res.json("좋아요 취소");
     }
   } catch (error) {
@@ -38,19 +38,19 @@ likeRouter.post("/likes", /*login_required,*/ async function (req, res, next) {
 });
 
 // 특정 포트폴리오에 좋아요한 사용자 리스트 반환
-likeRouter.get("/likes/:portfolio_id", login_required, async function (req, res, next) {
-  try {
-    const currentUserInfo = await userAuthService.getUserInfo({ user_id });
-    const { portfolio_id } = req.params;
-    const likes = await likeService.getLikeList({ portfolio_id });
-    res.status(200).json(likes);
-  } catch (error) {
-    next(error);
-  }
-});
+// likeRouter.get("/likes/:portfolio_id", /*login_required,*/ async function (req, res, next) {
+//   try {
+//     const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+//     const { portfolio_id } = req.params;
+//     const likes = await likeService.getLikeList({ portfolio_id });
+//     res.status(200).json(likes);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // 특정 사용자가 받은 총 좋아요 갯수를 반환
-likeRouter.get("/likescount/:user_id", login_required, async function (req, res, next) {
+likeRouter.get("/likescount/:user_id", /*login_required,*/ async function (req, res, next) {
   try {
     const { user_id } = req.params;
     const counts = await likeService.likeCount({ user_id });
