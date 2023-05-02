@@ -14,7 +14,7 @@ projectRouter.post("/projects", async (req, res, next) => {
       );
     }
 
-    // req (request) 에서 데이터 가져오기
+    // req에서 데이터 가져오기
     const { user_id, title, start_date, end_date } = req.body;
 
     // 위 데이터를 유저 db에 추가하기: projectService의 addProject 함수를 호출해 해당 요청 사용자의 학력 정보를 추가함
