@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Card, Row, Form, Button, Col } from "react-bootstrap";
+import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
 import formatDate from "../../util/formatDate";
 
@@ -8,12 +9,11 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
     console.log(project);
   }, [project]);
 
-  const handleSubmit = async (p) => {
-    p.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
       await Api.delete(`projects/${project.id}`);
-      // 삭제 성공한 경우, projects 상태 업데이트
       setProjects((prevProjects) =>
         prevProjects.filter((p) => p.id !== project.id)
       );
@@ -25,38 +25,34 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
 
   return (
     <Card className="mb-2">
-      <Card.Body>
-        <div>
-          프로젝트명 : {project.title}
-          <br />
-          <Row>
-            <Col md="6">{`시작일 : ${formatDate(project.start_date)}`}</Col>
-            <Col md="6">{`종료일 : ${formatDate(project.end_date)}`}</Col>
-          </Row>
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col></Col>
-            {isEditable && (
-              <Col>
-                <div className="d-flex justify-content-end mr-2">
-                  <Button
-                    variant="primary"
-                    type="button"
-                    className="me-3"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    edit
-                  </Button>
-                  <Button variant="primary" type="submit" className="me-3">
-                    Delete
-                  </Button>
-                </div>
-              </Col>
-            )}
-          </Row>
-        </Form>
-      </Card.Body>
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={isEditable ? 9 : 12}>
+            <Typography variant="h6">{project.title}</Typography>
+            <Typography variant="subtitle1">
+              시작일 : {formatDate(project.start_date)}
+              <br />
+              종료일 : {formatDate(project.end_date)}
+            </Typography>
+          </Grid>
+          {isEditable && (
+            <Grid
+              item
+              xs={3}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <IconButton color="primary" onClick={() => setIsEditing(true)}>
+                <Edit />
+              </IconButton>
+              <IconButton color="secondary" onClick={handleSubmit}>
+                <Delete />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
+      </CardContent>
     </Card>
   );
 }

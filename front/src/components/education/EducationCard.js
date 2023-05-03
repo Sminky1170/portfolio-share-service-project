@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Card, Row, Form, Button, Col } from "react-bootstrap";
+import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
 import formatDate from "../../util/formatDate";
 
@@ -13,7 +14,6 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
 
     try {
       await Api.delete(`educations/${education.id}`);
-      // 삭제 성공한 경우, educations 상태 업데이트
       setEducations((prevEducations) =>
         prevEducations.filter((e) => e.id !== education.id)
       );
@@ -25,36 +25,32 @@ function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
 
   return (
     <Card className="mb-2">
-      <Card.Body>
-        <div>
-          {education.school}
-          <br />
-          {education.major}
-          {`(${education.degree})`}
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col></Col>
-            {isEditable && (
-              <Col>
-                <div className="d-flex justify-content-end mr-2">
-                  <Button
-                    variant="primary"
-                    type="button"
-                    className="me-3"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    edit
-                  </Button>
-                  <Button variant="primary" type="submit" className="me-3">
-                    Delete
-                  </Button>
-                </div>
-              </Col>
-            )}
-          </Row>
-        </Form>
-      </Card.Body>
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={isEditable ? 9 : 12}>
+            <Typography variant="h6">{education.school}</Typography>
+            <Typography variant="subtitle1">
+              {education.major} ({education.degree})
+            </Typography>
+          </Grid>
+          {isEditable && (
+            <Grid
+              item
+              xs={3}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <IconButton color="primary" onClick={() => setIsEditing(true)}>
+                <Edit />
+              </IconButton>
+              <IconButton color="secondary" onClick={handleSubmit}>
+                <Delete />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
+      </CardContent>
     </Card>
   );
 }
