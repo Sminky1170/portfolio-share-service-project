@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Grid,
+  Box,
+} from "@mui/material";
 import * as Api from "../../api";
 import Education from "./Education";
 import EducationAddForm from "./EducationAddForm";
 
 function Educations({ portfolioOwnerId, isEditable }) {
-  //useState로 educations, isAdding 상태 생성
+  // useState로 educations, isAdding 상태 생성
   const [educations, setEducations] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -16,43 +23,45 @@ function Educations({ portfolioOwnerId, isEditable }) {
       .catch((err) => {
         console.log(err);
       });
-    // setEducations([
-    //   {
-    //     school: "1",
-    //     name: "elice",
-    //     major: "computer",
-    //   },
-    // ]);
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>학력</Card.Title>
+    <div className="mb-3 ml-3 mr-3">
+      <Card>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            학력
+          </Typography>
 
-        {educations.map((education) => (
-          <Education
-            education={education}
-            setEducations={setEducations}
-            isEditable={isEditable}
-          />
-        ))}
-        {isAdding && (
-          <EducationAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setEducations={setEducations}
-            setIsAdding={setIsAdding}
-          />
-        )}
-        {isEditable && (
-          <Row className="mt-3 text-center mb-4">
-            <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
-            </Col>
-          </Row>
-        )}
-      </Card.Body>
-    </Card>
+          {educations.map((education) => (
+            <Education
+              key={education.id}
+              education={education}
+              setEducations={setEducations}
+              isEditable={isEditable}
+            />
+          ))}
+          {isAdding && (
+            <EducationAddForm
+              portfolioOwnerId={portfolioOwnerId}
+              setEducations={setEducations}
+              setIsAdding={setIsAdding}
+            />
+          )}
+          {isEditable && (
+            <Box mt={2} display="flex" justifyContent="center">
+              <Button
+                onClick={() => setIsAdding(true)}
+                variant="contained"
+                color="primary"
+              >
+                +
+              </Button>
+            </Box>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

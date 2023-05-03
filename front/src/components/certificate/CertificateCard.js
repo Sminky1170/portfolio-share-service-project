@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Card, Row, Form, Button, Col } from "react-bootstrap";
+import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
 import formatDate from "../../util/formatDate";
 
@@ -18,7 +19,6 @@ function CertificateCard({
 
     try {
       await Api.delete(`certificates/${certificate.id}`);
-      // 삭제 성공한 경우, certificates 상태 업데이트
       setCertificates((prevCertificates) =>
         prevCertificates.filter((e) => e.id !== certificate.id)
       );
@@ -30,39 +30,37 @@ function CertificateCard({
 
   return (
     <Card className="mb-2">
-      <Card.Body>
-        <div>
-          {`자격증명 : ${certificate.name}`}
-          <br />
-          {`기관명 : ${certificate.organization}`}
-          <br />
-          {`발급일 : ${formatDate(certificate.issue_date)}`}
-          <br />
-          {`만료일 : ${formatDate(certificate.expiration_date)}`}
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col></Col>
-            {isEditable && (
-              <Col>
-                <div className="d-flex justify-content-end mr-2">
-                  <Button
-                    variant="primary"
-                    type="button"
-                    className="me-3"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    edit
-                  </Button>
-                  <Button variant="primary" type="submit" className="me-3">
-                    Delete
-                  </Button>
-                </div>
-              </Col>
-            )}
-          </Row>
-        </Form>
-      </Card.Body>
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={isEditable ? 9 : 12}>
+            <Typography variant="h6">{certificate.name}</Typography>
+            <Typography variant="subtitle1">
+              기관명 : {certificate.organization}
+            </Typography>
+            <Typography variant="subtitle1">
+              발급일 : {formatDate(certificate.issue_date)}
+              <br />
+              만료일 : {formatDate(certificate.expiration_date)}
+            </Typography>
+          </Grid>
+          {isEditable && (
+            <Grid
+              item
+              xs={3}
+              container
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <IconButton color="primary" onClick={() => setIsEditing(true)}>
+                <Edit />
+              </IconButton>
+              <IconButton color="secondary" onClick={handleSubmit}>
+                <Delete />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
+      </CardContent>
     </Card>
   );
 }

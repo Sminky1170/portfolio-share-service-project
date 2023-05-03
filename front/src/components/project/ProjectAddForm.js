@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import { Button, TextField, Grid, Card, CardContent, Box } from "@mui/material";
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [title, setTitle] = useState("");
   const [start_date, setStart_Date] = useState("");
   const [end_date, setEnd_Date] = useState("");
+
+  const today = new Date().toISOString().split("T")[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,50 +31,68 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
   return (
     <Card className="mb-2">
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="프로젝트 명을 입력하세요."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Row>
-              <Col md="6">
-                <Form.Control
-                  type="date"
-                  placeholder="프로젝트 시작일 yyyy-mm-dd"
-                  value={start_date}
-                  onChange={(e) => setStart_Date(e.target.value)}
-                />
-              </Col>
-              <Col md="6">
-                <Form.Control
-                  type="date"
-                  placeholder="프로젝트 종료일 yyyy-mm-dd"
-                  value={end_date}
-                  onChange={(e) => setEnd_Date(e.target.value)}
-                />
-              </Col>
-            </Row>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+      <CardContent>
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="프로젝트 명"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="프로젝트 시작일"
+                type="date"
+                value={start_date}
+                onChange={(e) => setStart_Date(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  max: end_date || today,
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="프로젝트 종료일"
+                type="date"
+                value={end_date}
+                onChange={(e) => setEnd_Date(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  max: today,
+                  min: start_date || undefined,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} className="mt-3 text-center">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className="me-3"
+              >
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsAdding(false)}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => setIsAdding(false)}
+              >
                 취소
               </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      </Card.Body>
+            </Grid>
+          </Grid>
+        </Box>
+      </CardContent>
     </Card>
   );
 }
