@@ -1,4 +1,5 @@
 import { projectService } from "../services/projectService.js";
+import is from "@sindresorhus/is";
 
 const PostProject = async (req, res, next) => {
     // @sindresorhus/is 패키지의 is.emptyObject 함수를 사용해 HTTP 요청의 body가 비어있는지 검사함(비었으면 에러 발생)

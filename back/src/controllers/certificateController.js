@@ -1,5 +1,5 @@
 import { certificateService } from "../services/certificateService.js";
-
+import is from "@sindresorhus/is";
 
 const PostCertificate = async (req,res,next) => {
     try {

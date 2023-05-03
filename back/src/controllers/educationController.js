@@ -1,4 +1,5 @@
 import { educationService } from "../services/educationService.js";
+import is from "@sindresorhus/is";
 
 const PostEducation = async (req, res, next) => {
     try {
