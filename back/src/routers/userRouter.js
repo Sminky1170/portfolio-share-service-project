@@ -100,7 +100,7 @@ userAuthRouter.put(
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
-      // const password = req.body.password ?? null;
+      const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
       const toUpdate = { name, email, password, description };
@@ -147,40 +147,50 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
-userAuthRouter.put("/users/:user_id/like", login_required, async function (req, res, next) {
-  try {
-    const user_id = req.params.user_id;   // 포스트 주인
-    const { pressLikeUserId } = req.body;    // 좋아요를 누른 사용자(들)
-    const AddLike = await userAuthService.addLike({ user_id, pressLikeUserId });
+userAuthRouter.put(
+  "/users/:user_id/like",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.user_id; // 포스트 주인
+      const { pressLikeUserId } = req.body; // 좋아요를 누른 사용자(들)
+      const AddLike = await userAuthService.addLike({
+        user_id,
+        pressLikeUserId,
+      });
 
-    if (AddLike.errorMessage) {
-      throw new Error(AddLike.errorMessage);
+      if (AddLike.errorMessage) {
+        throw new Error(AddLike.errorMessage);
+      }
+
+      return res.status(200).json(AddLike);
+    } catch (error) {
+      next(error);
     }
-
-    return res.status(200).json(AddLike);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
-userAuthRouter.put("/users/:user_id/dislike", login_required, async function (req, res, next) {
-  try {
-    const user_id = req.params.user_id;
-    const { pressLikeUserId } = req.body;
-    const DeleteLike = await userAuthService.deleteLike({
-      user_id,
-      pressLikeUserId,
-    });
+userAuthRouter.put(
+  "/users/:user_id/dislike",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.user_id;
+      const { pressLikeUserId } = req.body;
+      const DeleteLike = await userAuthService.deleteLike({
+        user_id,
+        pressLikeUserId,
+      });
 
-    if (DeleteLike.errorMessage) {
-      throw new Error(DeleteLike.errorMessage);
+      if (DeleteLike.errorMessage) {
+        throw new Error(DeleteLike.errorMessage);
+      }
+
+      return res.status(200).json(DeleteLike);
+    } catch (error) {
+      next(error);
     }
-
-    return res.status(200).json(DeleteLike);
-  } catch (error) {
-    next(error);
   }
-});
-
+);
 
 export { userAuthRouter };
