@@ -1,78 +1,34 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required.js";
-import { awardService } from "../services/awardService.js";
+// import { awardService } from "../services/awardService.js";
+import {PostAward, GetAward, PutAward, DeleteAward} from "../controllers/awardController.js"
+
 const awardRouter = Router();
 
-awardRouter.post("/awards", login_required, async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-    const { user_id, title, organization, date } = req.body;
+awardRouter.post(
+  "/awards", 
+  login_required,
+  PostAward 
+);
 
-    const newAward = await awardService.addAward({
-      user_id,
-      title,
-      organization,
-      date,
-    });
-    return res.status(201).json(newAward);
-  } catch (error) {
-    next(error);
-  }
-});
+awardRouter.get(
+  "/awards/:user_id", 
+  login_required, 
+  GetAward
+);
 
-awardRouter.get("/awards/:user_id", login_required, async (req, res, next) => {
-  try {
-    const { user_id } = req.params;
-    const award = await awardService.getAwards({ user_id });
+awardRouter.put(
+  "/awards/:id", 
+  login_required, 
+  PutAward
+);
 
-    if (award.errorMessage) {
-      throw new Error(award.errorMessage);
-    }
-    return res.status(200).json(award);
-  } catch (error) {
-    next(error);
-  }
-});
 
-awardRouter.put("/awards/:id", login_required, async (req, res, next) => {
-  try {
-    const award_id = req.params.id;
-
-    const {title, organization, date} = req.body
-    
-    const toUpdate = { title, organization, date };
-
-    const updatedAward = await awardService.setAward({
-      award_id,
-      toUpdate,
-    });
-
-    if (updatedAward.errorMessage) {
-      throw new Error(updatedAward.errorMessage);
-    }
-
-    return res.status(200).json(updatedAward);
-  } catch (error) {
-    next(error);
-  }
-});
-awardRouter.delete("/awards/:id", login_required, async (req, res, next) => {
-  try {
-    const award_id = req.params.id;
-    const result = await awardService.deleteAward({ award_id });
-
-    if (result.errorMessage) {
-      throw new Error(result.errorMessage);
-    }
-    return res.status(200).send(result);
-  } catch (err) {
-    next(err);
-  }
-});
+awardRouter.delete(
+  "/awards/:id", 
+  login_required, 
+  DeleteAward
+);
 
 export { awardRouter };
