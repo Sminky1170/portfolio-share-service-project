@@ -16,12 +16,23 @@ likeRouter.post('/likes', login_required, async (req, res, next) => {
     
     const { following_user_id, followed_user_id } = req.body;
 
+    const user = await userAuthService.getUserById(req.user_id);
+    const existingLike = user.likes.find(like => like.followed_user_id === followed_user_id);
+
+    if (existingLike) {
+      existingLike.isLiked = true;
+      await user.save();
+    } else {
+      user.likes.push({ followed_user_id, isLiked: true });
+      await user.save();
+    }
+
     const newLike = await LikeService.createLike({
       following_user_id,
       followed_user_id
     });
 
-    return res.status(201).json(newLike);
+    return res.status(201).json({ isLiked: true, likes: user.likes });
   } catch (error) {
     next(error);
   }
@@ -31,6 +42,14 @@ likeRouter.post('/likes', login_required, async (req, res, next) => {
 likeRouter.delete('/likes', login_required, async (req, res, next) => {
   try {
     const { following_user_id, followed_user_id } = req.body;
+    const user = await userAuthService.getUserById(req.user_id);
+    const existingLike = user.likes.find(like => like.followed_user_id === followed_user_id);
+
+    if (existingLike) {
+      existingLike.isLiked = false;
+      await user.save();
+    }
+
     const isDeleted = await LikeService.deleteLike({ following_user_id, followed_user_id });
     if (isDeleted) {
       return res.status(204).end();
