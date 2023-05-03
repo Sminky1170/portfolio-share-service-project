@@ -5,25 +5,46 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserStateContext } from "../../App";
+import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({
+  portfolioOwnerId,
+  user,
+  setIsEditing,
+  isEditable,
+  isNetwork,
+}) {
   const navigate = useNavigate();
-  const [likes, setLikes] = useState(0);
-  const [likedUsers, setLikedUsers] = useState([]);
-  const [liked, setLiked] = useState(false);
+  const userState = useContext(UserStateContext);
+  const [liked, setLiked] = useState(
+    user?.likeUsers?.includes(userState.user?.id)
+  );
+  const [likesCount, setLikesCount] = useState(user?.likeCount);
 
-  const handleLikeClick = () => {
-    if (!likedUsers.includes(user.id)) {
-      setLikes((prevLikes) => prevLikes + 1);
-      setLikedUsers((prevLikedUsers) => [...prevLikedUsers, user.id]);
-      setLiked(true);
-    } else {
-      setLikes((prevLikes) => prevLikes - 1);
-      setLikedUsers((prevLikedUsers) =>
-        prevLikedUsers.filter((id) => id !== user.id)
-      );
-      setLiked(false);
+  const handleLikeClick = async (e) => {
+    e.preventDefault();
+    try {
+      let res;
+      if (!liked) {
+        res = await Api.put(`users/${user.id}/like`, {
+          pressLikeUserId: userState.user.id,
+        });
+        // setLikes((prevLikes) => prevLikes + 1);
+        setLiked(true);
+        setLikesCount(res.data.likeCount);
+      } else {
+        res = await Api.put(`users/${user.id}/dislike`, {
+          pressLikeUserId: userState.user.id,
+        });
+        // setLikes((prevLikes) => prevLikes - 1);
+        setLiked(false);
+        setLikesCount(res.data.likeCount);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("좋아요 버튼 누르기에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -67,22 +88,18 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         )}
 
         {isNetwork && (
-          <>
-            <Button
-              variant="text"
-              onClick={() => navigate(`/users/${user.id}`)}
-            >
-              포트폴리오
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={handleLikeClick}
-              startIcon={liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            >
-              {likes}
-            </Button>
-          </>
+          <Button variant="text" onClick={() => navigate(`/users/${user.id}`)}>
+            포트폴리오
+          </Button>
         )}
+
+        <Button
+          variant="outlined"
+          onClick={handleLikeClick}
+          startIcon={liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        >
+          {likesCount}
+        </Button>
       </CardContent>
     </Card>
   );
