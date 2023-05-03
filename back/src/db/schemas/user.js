@@ -6,6 +6,7 @@ const UserSchema = new Schema(
     id: {
       type: String,
       required: true,
+      unique: true,   // 기본키 설정
     },
     email: {
       type: String,
@@ -24,15 +25,21 @@ const UserSchema = new Schema(
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",
     },
-    isLiked:{
-      type: Boolean,
-      required: false,
-      default: false,
+    likeCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    likeUsers: {
+      type: Array,
+      required: true,
+      default: [],
     },
   },
   {
     timestamps: true,
-  }
+  },
+  {_id: false}  // _id 필드가 기본키로 설정되는 것을 방지
 );
 
 const UserModel = model("User", UserSchema);

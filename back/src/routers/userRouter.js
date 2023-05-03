@@ -147,4 +147,40 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+userAuthRouter.put("/users/:user_id/like", /*login_required,*/ async function (req, res, next) {
+  try {
+    const user_id = req.params.id;
+    const { currentUserId } = req.body ?? null;
+    const addedLike = await userAuthService.addLike({ user_id, currentUserId });
+
+    if (addedLike.errorMessage) {
+      throw new Error(addedLike.errorMessage);
+    }
+
+    res.status(200).json(addedLike);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userAuthRouter.put("/users/:id/dislike", /*login_required,*/ async function (req, res, next) {
+  try {
+    const user_id = req.params.id;
+    const { currentUserId } = req.body ?? null;
+    const removedLike = await userAuthService.removeLike({
+      user_id,
+      currentUserId,
+    });
+
+    if (removedLike.errorMessage) {
+      throw new Error(removedLike.errorMessage);
+    }
+
+    res.status(200).json(removedLike);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 export { userAuthRouter };

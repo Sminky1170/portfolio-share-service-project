@@ -33,6 +33,32 @@ class User {
     );
     return updatedUser;
   }
+
+  static async addLike({ user_id, currentUserId }) {
+    const filter = { id: user_id };
+    const update = { $inc: { likeCount: 1 }, $push: { likeUsers: currentUserId } }
+    const option = { returnOriginal: false };
+
+    const addedLike = await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return addedLike;
+  }
+
+  static async removeLike({ user_id, currentUserId }) {
+    const filter = { id: user_id };
+    const update = { $inc: { likeCount: -1 }, $push: { likeUsers: currentUserId } }
+    const option = { returnOriginal: false };
+
+    const removedLike = await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return removedLike;
+  }
 }
 
 export { User };

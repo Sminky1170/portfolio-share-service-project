@@ -112,6 +112,30 @@ class userAuthService {
     return user;
   }
 
+  static async addLike ({ user_id, currentUserId }) {
+    const likeInfo = await User.findById({ user_id });
+    if (!likeInfo) {
+      const errorMessage =
+        "해당 id를 가진 사용자는 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const addedLike = await User.addLike({ user_id, currentUserId });
+    return addedLike;
+  }
+
+  static async removeLike ({ user_id, currentUserId }) {
+    const likeInfo = await User.findById({ user_id });
+    if (!likeInfo) {
+      const errorMessage =
+        "해당 id를 가진 사용자는 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const removedLike = await User.removeLike({ user_id, currentUserId });
+    return removedLike;
+  }
+
   static async getUserInfo({ user_id }) {
     const user = await User.findById({ user_id });
 
