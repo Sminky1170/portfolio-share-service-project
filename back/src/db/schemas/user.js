@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     isLiked:{
       type: Boolean,
       required: false,
+      default: false,
     },
   },
   {

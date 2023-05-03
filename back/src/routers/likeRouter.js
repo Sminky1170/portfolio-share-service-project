@@ -6,7 +6,10 @@ import { userAuthService } from "../services/userService.js"
 const likeRouter = Router();
 
 // 좋아요 생성
-likeRouter.post('/likes', login_required, async (req, res, next) => {
+likeRouter.post(
+  '/likes', 
+  login_required,
+  async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -14,9 +17,11 @@ likeRouter.post('/likes', login_required, async (req, res, next) => {
       );
     }
     
-    const { following_user_id, followed_user_id } = req.body;
-
-    const user = await userAuthService.getUserById(req.user_id);
+    // const { following_user_id, followed_user_id } = req.body;
+    const { followed_user_id } = req.body;
+    const following_user_id = req.currentUserId;  // 로그인 사용자
+    const user = await userAuthService.getUserInfo(following_user_id);
+    console.log(user)
     const existingLike = user.likes.find(like => like.followed_user_id === followed_user_id);
 
     if (existingLike) {
@@ -39,7 +44,7 @@ likeRouter.post('/likes', login_required, async (req, res, next) => {
 });
 
 // 좋아요 삭제
-likeRouter.delete('/likes', login_required, async (req, res, next) => {
+likeRouter.delete('/likes', /*login_required,*/ async (req, res, next) => {
   try {
     const { following_user_id, followed_user_id } = req.body;
     const user = await userAuthService.getUserById(req.user_id);
