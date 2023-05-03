@@ -112,7 +112,7 @@ class userAuthService {
     return user;
   }
 
-  static async addLike ({ user_id, pressLikeUserId }) {
+  static async addLike({ user_id, pressLikeUserId }) {
     const likeInfo = await User.findById({ user_id });
     if (!likeInfo) {
       const errorMessage =
@@ -124,7 +124,7 @@ class userAuthService {
     return AddLike;
   }
 
-  static async deleteLike ({ user_id, pressLikeUserId }) {
+  static async deleteLike({ user_id, pressLikeUserId }) {
     const likeInfo = await User.findById({ user_id });
     if (!likeInfo) {
       const errorMessage =
@@ -133,6 +133,7 @@ class userAuthService {
     }
 
     const DeleteLike = await User.deleteLike({ user_id, pressLikeUserId });
+    console.log(DeleteLike);
     return DeleteLike;
   }
 
