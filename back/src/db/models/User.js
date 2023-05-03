@@ -34,30 +34,30 @@ class User {
     return updatedUser;
   }
 
-  static async addLike({ user_id, currentUserId }) {
+  static async addLike({ user_id, pressLikeUserId }) {
     const filter = { id: user_id };
-    const update = { $inc: { likeCount: 1 }, $push: { likeUsers: currentUserId } }
+    const update = { $inc: { likeCount: 1 }, $push: { likeUsers: pressLikeUserId } }
     const option = { returnOriginal: false };
 
-    const addedLike = await UserModel.findOneAndUpdate(
+    const AddLike = await UserModel.findOneAndUpdate(
       filter,
       update,
       option
     );
-    return addedLike;
+    return AddLike;
   }
 
-  static async removeLike({ user_id, currentUserId }) {
+  static async deleteLike({ user_id, pressLikeUserId }) {
     const filter = { id: user_id };
-    const update = { $inc: { likeCount: -1 }, $push: { likeUsers: currentUserId } }
+    const update = { $inc: { likeCount: -1 }, $push: { likeUsers: pressLikeUserId } }
     const option = { returnOriginal: false };
 
-    const removedLike = await UserModel.findOneAndUpdate(
+    const DeleteLike = await UserModel.findOneAndUpdate(
       filter,
       update,
       option
     );
-    return removedLike;
+    return DeleteLike;
   }
 }
 

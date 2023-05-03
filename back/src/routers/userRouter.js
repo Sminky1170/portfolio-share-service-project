@@ -147,36 +147,36 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
-userAuthRouter.put("/users/:user_id/like", /*login_required,*/ async function (req, res, next) {
+userAuthRouter.put("/users/:user_id/like", login_required, async function (req, res, next) {
   try {
-    const user_id = req.params.id;
-    const { currentUserId } = req.body ?? null;
-    const addedLike = await userAuthService.addLike({ user_id, currentUserId });
+    const user_id = req.params.user_id;   // 포스트 주인
+    const { pressLikeUserId } = req.body;    // 좋아요를 누른 사용자(들)
+    const AddLike = await userAuthService.addLike({ user_id, pressLikeUserId });
 
-    if (addedLike.errorMessage) {
-      throw new Error(addedLike.errorMessage);
+    if (AddLike.errorMessage) {
+      throw new Error(AddLike.errorMessage);
     }
 
-    res.status(200).json(addedLike);
+    return res.status(200).json(AddLike);
   } catch (error) {
     next(error);
   }
 });
 
-userAuthRouter.put("/users/:id/dislike", /*login_required,*/ async function (req, res, next) {
+userAuthRouter.put("/users/:user_id/dislike", login_required, async function (req, res, next) {
   try {
-    const user_id = req.params.id;
-    const { currentUserId } = req.body ?? null;
-    const removedLike = await userAuthService.removeLike({
+    const user_id = req.params.user_id;
+    const { pressLikeUserId } = req.body;
+    const DeleteLike = await userAuthService.deleteLike({
       user_id,
-      currentUserId,
+      pressLikeUserId,
     });
 
-    if (removedLike.errorMessage) {
-      throw new Error(removedLike.errorMessage);
+    if (DeleteLike.errorMessage) {
+      throw new Error(DeleteLike.errorMessage);
     }
 
-    res.status(200).json(removedLike);
+    return res.status(200).json(DeleteLike);
   } catch (error) {
     next(error);
   }
