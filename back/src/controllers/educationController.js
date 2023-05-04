@@ -1,5 +1,6 @@
 import { educationService } from "../services/educationService.js";
 import is from "@sindresorhus/is";
+import * as educationValidation from "../validations/educationValidation.js";
 
 const PostEducation = async (req, res, next) => {
   try {
@@ -7,6 +8,11 @@ const PostEducation = async (req, res, next) => {
       throw new Error(
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
+    }
+
+    const {error} = educationValidation.postEducationSchema.validate(req.body)
+    if (error) {
+      throw new Error(error.details[0].message)
     }
 
     // req (request) 에서 데이터 가져오기
@@ -19,15 +25,6 @@ const PostEducation = async (req, res, next) => {
       major,
       degree,
     });
-
-    // educationService.addEducation 메소드 호출하고 반환된 결과의 에러가 존재하면 에러 객체를 던짐
-    // if (newEducation.errorMessage) {
-    //   throw new Error(newEducation.errorMessage);
-    // }
-    // 위코드가 educationService.addEducation에서 이미 예외처리하고 있으므로 중복된 코드라고 함...
-
-    // 성공적인 HTTP 응답을 생성. status(201)로 201 Created 상태코드를, json()으로 newEducation 객체를 JSON 형태로 반환
-    // 에러 발생시 next함수로 다음 미들웨어에 에러 객체를 던짐
     return res.status(201).json(newEducation);
   } catch (error) {
     next(error);
@@ -57,6 +54,10 @@ const PutEducation = async (req, res, next) => {
   try {
     const education_id = req.params.id;
 
+    const {error} = educationValidation.putEducationSchema.validate(req.body)
+    if (error) {
+      throw new Error(error.details[0].message)
+    }
     const { school, major, degree } = req.body;
 
     const toUpdate = { school, major, degree };

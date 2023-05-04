@@ -1,5 +1,6 @@
 import { awardService } from "../services/awardService.js";
 import is from "@sindresorhus/is";
+import * as awardValidation from "../validations/awardValidation.js";
 
 const PostAward = async (req, res, next) => {
   try {
@@ -7,6 +8,10 @@ const PostAward = async (req, res, next) => {
       throw new Error(
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
+    }
+    const { error } = awardValidation.postAwardSchema.validate(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
     }
     const { user_id, title, organization, date } = req.body;
 
@@ -39,6 +44,11 @@ const GetAward = async (req, res, next) => {
 const PutAward = async (req, res, next) => {
   try {
     const award_id = req.params.id;
+
+    const { error } = awardValidation.putAwardSchema.validate(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
 
     const { title, organization, date } = req.body;
 

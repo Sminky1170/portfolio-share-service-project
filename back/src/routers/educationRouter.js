@@ -1,7 +1,6 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required.js";
-// import { educationService } from "../services/educationService.js";
 import {PostEducation, GetEducation, PutEducation, DeleteEducation} from "../controllers/educationController.js"
 
 const educationRouter = Router();
