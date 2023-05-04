@@ -6,6 +6,7 @@ const postProjectSchema = Joi.object({
   title: Joi.string().required(),
   start_date: Joi.date().required(),
   end_date: Joi.date().required(),
+  description:Joi.string(),
 });
 
 const putProjectSchema = Joi.object({
@@ -13,6 +14,7 @@ const putProjectSchema = Joi.object({
   title: Joi.string().required(),
   start_date: Joi.date().required(),
   end_date: Joi.date().required(),
+  description:Joi.string(),
 });
 
 export {postProjectSchema , putProjectSchema};

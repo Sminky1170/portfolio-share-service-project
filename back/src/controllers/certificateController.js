@@ -16,7 +16,7 @@ const PostCertificate = async (req, res, next) => {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id, name, organization, issue_date, expiration_date } =
+    const { user_id, name, organization, issue_date } =
       req.body;
 
     const newCertificate = await certificateService.addCertificate({
@@ -24,7 +24,6 @@ const PostCertificate = async (req, res, next) => {
       name,
       organization,
       issue_date,
-      expiration_date,
     });
 
     return res.status(201).json(newCertificate);
@@ -62,9 +61,9 @@ const PutCertificate = async (req, res, next) => {
       throw new Error(error.details[0].message)
     }
 
-    const { name, organization, issue_date, expiration_date } = req.body;
+    const { name, organization, issue_date } = req.body;
 
-    const toUpdate = { name, organization, issue_date, expiration_date };
+    const toUpdate = { name, organization, issue_date };
 
     const updatedCertificate = await certificateService.setCertificate({
       certificate_id,

@@ -16,7 +16,7 @@ const PostProject = async (req, res, next) => {
     }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id, title, start_date, end_date } = req.body;
+    const { user_id, title, start_date, end_date, description } = req.body;
 
     // 위 데이터를 유저 db에 추가하기: projectService의 addProject 함수를 호출해 해당 요청 사용자의 학력 정보를 추가함
     const newProject = await projectService.addProject({
@@ -24,6 +24,7 @@ const PostProject = async (req, res, next) => {
       title,
       start_date,
       end_date,
+      description
     });
     return res.status(201).json(newProject);
   } catch (error) {
@@ -59,9 +60,9 @@ const PutProject = async (req, res, next) => {
       throw new Error(error.details[0].message);
     }
 
-    const { title, start_date, end_date } = req.body;
+    const { title, start_date, end_date, description } = req.body;
 
-    const toUpdate = { title, start_date, end_date };
+    const toUpdate = { title, start_date, end_date, description };
 
     // 추출한 필드값을 setProject 메소드의 인자로 전달하여 해당 프로젝트 정보 업데이트
     const updatedProject = await projectService.setProject({

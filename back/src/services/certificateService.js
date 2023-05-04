@@ -7,9 +7,8 @@ class certificateService {
     name,
     organization,
     issue_date,
-    expiration_date,
   }) {
-    const obj = { user_id, name, organization, issue_date, expiration_date };
+    const obj = { user_id, name, organization, issue_date };
 
     const find_certificate = await Certificate.findByObj(obj);
 
@@ -70,16 +69,6 @@ class certificateService {
     if (toUpdate.issue_date) {
       const fieldToUpdate = "issue_date";
       const newValue = toUpdate.issue_date;
-      certificate = await Certificate.update({
-        certificate_id,
-        fieldToUpdate,
-        newValue,
-      });
-    }
-
-    if (toUpdate.expiration_date) {
-      const fieldToUpdate = "expiration_date";
-      const newValue = toUpdate.expiration_date;
       certificate = await Certificate.update({
         certificate_id,
         fieldToUpdate,

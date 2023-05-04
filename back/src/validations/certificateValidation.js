@@ -6,7 +6,6 @@ const postCertificateSchema = Joi.object({
   name: Joi.string().required(),
   organization: Joi.string().required(),
   issue_date: Joi.date().required(),
-  expiration_date: Joi.date().required()
 });
 
 const putCertificateSchema = Joi.object({
@@ -14,7 +13,6 @@ const putCertificateSchema = Joi.object({
   name: Joi.string().required(),
   organization: Joi.string().required(),
   issue_date: Joi.date().required(),
-  expiration_date: Joi.date().required()
 });
 
-export { postCertificateSchema, putCertificateSchema};
+export { postCertificateSchema, putCertificateSchema };

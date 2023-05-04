@@ -35,14 +35,12 @@ class Certificate {
     name,
     organization,
     issue_date,
-    expiration_date,
   }) {
     const findCertificate = await CertificateModel.findOne({
       user_id,
       name,
       organization,
       issue_date,
-      expiration_date,
     });
     return findCertificate;
   }
