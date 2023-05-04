@@ -15,7 +15,4 @@ const putProjectSchema = Joi.object({
   end_date: Joi.date().required(),
 });
 
-module.exports = {
-  postProjectSchema,
-  putProjectSchema
-};
+export {postProjectSchema , putProjectSchema};

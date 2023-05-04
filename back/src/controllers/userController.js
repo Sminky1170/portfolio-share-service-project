@@ -1,6 +1,6 @@
 import { userAuthService } from "../services/userService.js";
 import is from "@sindresorhus/is";
-import * as userValidation from "../validations/userValidation.js";
+// import * as userValidation from "../validations/userValidation.js";
 
 const PostUser_register = async function (req, res, next) {
     try {
@@ -9,10 +9,10 @@ const PostUser_register = async function (req, res, next) {
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
-      const { error } = userValidation.postRegisterUserSchema.validate(req.body);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
+      // const { error } = userValidation.postRegisterUserSchema.validate(req.body);
+      // if (error) {
+      //   throw new Error(error.details[0].message);
+      // }
       // req (request) 에서 데이터 가져오기
       const { name, email, password } = req.body;
   
@@ -36,10 +36,10 @@ const PostUser_register = async function (req, res, next) {
 
 const PostUser_login = async function (req, res, next) {
     try {
-      const { error } = userValidation.AddLikepostLoginUserSchema.validate(req.body);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
+      // const { error } = userValidation.postLoginUserSchema.validate(req.body);
+      // if (error) {
+      //   throw new Error(error.details[0].message);
+      // }
       // req (request) 에서 데이터 가져오기
       const { email, password } = req.body;
   
@@ -90,12 +90,12 @@ const GetUser_current = async function (req, res, next) {
 
 const PutUser_userupdate = async function (req, res, next) {
     try {
-      const { error } = userValidation.putUpdateUserSchema.validate(req.body);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
       // URI로부터 사용자 id를 추출함.
       const user_id = req.params.id;
+      // const { error } = userValidation.putUpdateUserSchema.validate(req.body);
+      // if (error) {
+      //   throw new Error(error.details[0].message);
+      // }
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const { name, email, password, description } = req.body;
       const toUpdate = { name, email, password, description };
@@ -111,7 +111,7 @@ const PutUser_userupdate = async function (req, res, next) {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
 
 
@@ -142,10 +142,10 @@ const GetUser_afterlogin = function (req, res, next) {
 
 const PutUser_likes = async function (req, res, next) {
     try {
-      const { error } = userValidation.putLikesUserSchema.validate(req.body);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
+      // const { error } = userValidation.putLikesUserSchema.validate(req.body);
+      // if (error) {
+      //   throw new Error(error.details[0].message);
+      // }
       const user_id = req.params.user_id; // 포스트 주인
       const { pressLikeUserId } = req.body; // 좋아요를 누른 사용자(들)
       const AddLike = await userAuthService.addLike({
@@ -167,10 +167,10 @@ const PutUser_likes = async function (req, res, next) {
 
 const PutUser_dislikes = async function (req, res, next) {
     try {
-      const { error } = userValidation.putDislikesUserSchema.validate(req.body);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
+      // const { error } = userValidation.putDislikesUserSchema.validate(req.body);
+      // if (error) {
+      //   throw new Error(error.details[0].message);
+      // }
       const user_id = req.params.user_id;
       const { pressLikeUserId } = req.body;
       const DeleteLike = await userAuthService.deleteLike({
@@ -191,4 +191,4 @@ const PutUser_dislikes = async function (req, res, next) {
 
 
 export {PostUser_register, PostUser_login, GetUser_userlist, GetUser_current,PutUser_userupdate,
-        GetUser_err_yellow, GetUser_afterlogin, PutUser_likes, PutUser_dislikes}
+        GetUser_err_yellow, GetUser_afterlogin, PutUser_likes, PutUser_dislikes};

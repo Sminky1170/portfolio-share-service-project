@@ -15,7 +15,4 @@ const putAwardSchema = Joi.object({
   date: Joi.date().required(),
 });
 
-module.exports = {
-  postAwardSchema,
-  putAwardSchema
-};
+export {postAwardSchema, putAwardSchema};

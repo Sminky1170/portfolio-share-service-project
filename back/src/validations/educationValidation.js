@@ -1,4 +1,4 @@
-import { educationService } from "../services/edcuationService.js";
+import { educationService } from "../services/educationService.js";
 import Joi from "joi";
 
 const postEducationSchema = Joi.object({
@@ -15,7 +15,4 @@ const putEducationSchema = Joi.object({
     degree: Joi.string().required(),
   });
 
-  module.exports = {
-    postEducationSchema,
-    putEducationSchema
-  };
+export {postEducationSchema,putEducationSchema};
