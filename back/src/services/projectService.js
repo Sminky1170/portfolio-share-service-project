@@ -2,7 +2,13 @@ import { User, Project } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 
 class projectService {
-  static async addProject({ user_id, title, start_date, end_date, description }) {
+  static async addProject({
+    user_id,
+    title,
+    start_date,
+    end_date,
+    description,
+  }) {
     // DB에 해당 user_id가 존재할 경우,
     // 먼저, DB에서 해당 유저의 프로젝트 정보를 확인해서, 만약 추가하려는 프로젝트 정보가 이미 DB에 존재할 경우
     const obj = { user_id, title, start_date, end_date, description };
@@ -61,7 +67,7 @@ class projectService {
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
-      project = await Project.update({ user_id, fieldToUpdate, newValue });
+      project = await Project.update({ project_id, fieldToUpdate, newValue });
     }
 
     project.errorMessage = null;

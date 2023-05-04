@@ -24,7 +24,7 @@ const PostProject = async (req, res, next) => {
       title,
       start_date,
       end_date,
-      description
+      description,
     });
     return res.status(201).json(newProject);
   } catch (error) {
