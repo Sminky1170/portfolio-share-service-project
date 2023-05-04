@@ -133,7 +133,6 @@ class userAuthService {
     }
 
     const DeleteLike = await User.deleteLike({ user_id, pressLikeUserId });
-    console.log(DeleteLike);
     return DeleteLike;
   }
 

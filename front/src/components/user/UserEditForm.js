@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import * as Api from "../../api";
 import {
   Avatar,
@@ -9,65 +9,27 @@ import {
   Container,
   FormControl,
   Grid,
-  IconButton,
   Input,
   InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
-  const [previewImage, setPreviewImage] = useState(
-    user.image || "http://placekitten.com/200/200"
-  );
-  const inputFileRef = useRef(null);
-  const [imageFile, setImageFile] = useState(null);
+  const previewImage = "http://placekitten.com/200/200";
+
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [description, setDescription] = useState(user.description);
 
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setPreviewImage(e.target.result);
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
-
-      setImageFile(e.target.files[0]);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    let uploadedImageUrl = null;
-
-    if (imageFile) {
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-      try {
-        const res = await Api.put(`users/${user.id}/upload_image`, formData);
-        uploadedImageUrl = res.data.url;
-      } catch (error) {
-        alert("이미지 업로드에 실패했습니다.");
-        return;
-      }
-    }
 
     const updatedUserInfo = {
       name,
       email,
       description,
     };
-
-    if (uploadedImageUrl) {
-      updatedUserInfo.image = uploadedImageUrl;
-    }
 
     try {
       const res = await Api.put(`users/${user.id}`, updatedUserInfo);
@@ -89,25 +51,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             sx={{ "& .MuiAvatar-root": { width: "10rem", height: "10rem" } }}
           >
             <Avatar src={previewImage} />
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <input
-              accept="image/*"
-              hidden
-              id="icon-button-file"
-              type="file"
-              ref={inputFileRef}
-              onChange={handleImageChange}
-            />
-            <label htmlFor="icon-button-file">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <PhotoCamera />
-              </IconButton>
-            </label>
           </Box>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>

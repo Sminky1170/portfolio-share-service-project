@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AwardCard from "./AwardCard";
 import AwardEditForm from "./AwardEditForm";
-import * as Api from "../../api";
 
 function Award({ award, setAwards, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);

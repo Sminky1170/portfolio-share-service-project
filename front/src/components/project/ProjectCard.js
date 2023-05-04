@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
 import formatDate from "../../util/formatDate";
 
 function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
-  useEffect(() => {
-    console.log(project);
-  }, [project]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,6 +28,10 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
               시작일 : {formatDate(project.start_date)}
               <br />
               종료일 : {formatDate(project.end_date)}
+              <br />
+            </Typography>
+            <Typography variant="subtitle1">
+              프로젝트 내용 : {project.description}
             </Typography>
           </Grid>
           {isEditable && (

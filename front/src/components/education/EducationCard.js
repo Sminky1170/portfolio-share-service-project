@@ -1,14 +1,8 @@
-import { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
-import formatDate from "../../util/formatDate";
 
 function EducationCard({ education, isEditable, setIsEditing, setEducations }) {
-  useEffect(() => {
-    console.log(education);
-  }, [education]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
