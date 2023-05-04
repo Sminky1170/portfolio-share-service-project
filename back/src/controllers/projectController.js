@@ -1,5 +1,6 @@
 import { projectService } from "../services/projectService.js";
 import is from "@sindresorhus/is";
+import * as projectValidation from "../validations/projectValidation.js";
 
 const PostProject = async (req, res, next) => {
   // @sindresorhus/is 패키지의 is.emptyObject 함수를 사용해 HTTP 요청의 body가 비어있는지 검사함(비었으면 에러 발생)
@@ -9,9 +10,13 @@ const PostProject = async (req, res, next) => {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
+    const { error } = projectValidation.postProjectSchema.validate(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
 
     // req (request) 에서 데이터 가져오기
-    const { user_id, title, start_date, end_date } = req.body;
+    const { user_id, title, start_date, end_date, description } = req.body;
 
     // 위 데이터를 유저 db에 추가하기: projectService의 addProject 함수를 호출해 해당 요청 사용자의 학력 정보를 추가함
     const newProject = await projectService.addProject({
@@ -19,8 +24,8 @@ const PostProject = async (req, res, next) => {
       title,
       start_date,
       end_date,
+      description
     });
-
     return res.status(201).json(newProject);
   } catch (error) {
     next(error);
@@ -50,9 +55,14 @@ const PutProject = async (req, res, next) => {
   try {
     const project_id = req.params.id;
 
-    const { title, start_date, end_date } = req.body;
+    const { error } = projectValidation.putProjectSchema.validate(req.body);
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
 
-    const toUpdate = { title, start_date, end_date };
+    const { title, start_date, end_date, description } = req.body;
+
+    const toUpdate = { title, start_date, end_date, description };
 
     // 추출한 필드값을 setProject 메소드의 인자로 전달하여 해당 프로젝트 정보 업데이트
     const updatedProject = await projectService.setProject({

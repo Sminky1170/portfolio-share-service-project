@@ -23,10 +23,6 @@ const CertificateSchema = new Schema(
       type: Date,
       required: true,
     },
-    expiration_date: {
-      type: Date,
-      required: true,
-    },
   },
   {
     timestamps: true,

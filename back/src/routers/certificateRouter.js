@@ -17,10 +17,7 @@ certificateRouter.get("/certificates/:id", login_required, GetCertificate);
 
 certificateRouter.put("/certificates/:id", login_required, PutCertificate);
 
-certificateRouter.delete(
-  "/certificates/:id",
-  login_required,
-  DeleteCertificate
-);
+certificateRouter.delete("/certificates/:id", login_required, DeleteCertificate);
+
 
 export { certificateRouter };

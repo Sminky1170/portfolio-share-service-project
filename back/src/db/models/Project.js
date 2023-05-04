@@ -40,12 +40,13 @@ class Project {
   }
 
   // 추가! obj정보가 포함된 정보를 반환해주는 함수 (하나의 정보만 반환)
-  static async findByObj({ user_id, title, start_date, end_date }) {
+  static async findByObj({ user_id, title, start_date, end_date, description }) {
     const findProject = await ProjectModel.findOne({
       user_id,
       title,
       start_date,
       end_date,
+      description
     });
     return findProject;
   }

@@ -1,5 +1,6 @@
 import { certificateService } from "../services/certificateService.js";
 import is from "@sindresorhus/is";
+import * as certificateValidation from "../validations/certificateValidation.js";
 
 const PostCertificate = async (req, res, next) => {
   try {
@@ -9,8 +10,13 @@ const PostCertificate = async (req, res, next) => {
       );
     }
 
+    const {error} = certificateValidation.postCertificateSchema.validate(req.body)
+    if (error) {
+      throw new Error(error.details[0].message)
+    }
+
     // req (request) 에서 데이터 가져오기
-    const { user_id, name, organization, issue_date, expiration_date } =
+    const { user_id, name, organization, issue_date } =
       req.body;
 
     const newCertificate = await certificateService.addCertificate({
@@ -18,7 +24,6 @@ const PostCertificate = async (req, res, next) => {
       name,
       organization,
       issue_date,
-      expiration_date,
     });
 
     return res.status(201).json(newCertificate);
@@ -51,9 +56,14 @@ const PutCertificate = async (req, res, next) => {
   try {
     const certificate_id = req.params.id;
 
-    const { name, organization, issue_date, expiration_date } = req.body;
+    const {error} = certificateValidation.putCertificateSchema.validate(req.body)
+    if (error) {
+      throw new Error(error.details[0].message)
+    }
 
-    const toUpdate = { name, organization, issue_date, expiration_date };
+    const { name, organization, issue_date } = req.body;
+
+    const toUpdate = { name, organization, issue_date };
 
     const updatedCertificate = await certificateService.setCertificate({
       certificate_id,

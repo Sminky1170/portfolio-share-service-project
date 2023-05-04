@@ -23,6 +23,11 @@ const ProjectSchema = new Schema(
       type: Date,
       required: true,
     },
+    description:{
+      type: String,
+      required: false,
+      default: "none",
+    },
   },
   {
     timestamps: true,
