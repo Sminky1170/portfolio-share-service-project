@@ -6,6 +6,7 @@ function ProjectEditForm({ project, setIsEditing, setProjects }) {
   const [title, setTitle] = useState(project.title);
   const [start_date, setStart_Date] = useState(project.start_date);
   const [end_date, setEnd_Date] = useState(project.end_date);
+  const [description, setDescription] = useState(project.description);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -18,6 +19,7 @@ function ProjectEditForm({ project, setIsEditing, setProjects }) {
         title,
         start_date: new Date(start_date),
         end_date: new Date(end_date),
+        description,
       });
 
       const updateProject = res.data;
@@ -98,7 +100,16 @@ function ProjectEditForm({ project, setIsEditing, setProjects }) {
                 }}
               />
             </Grid>
-
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="프로젝트 내용"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                multiline
+                rows={4}
+              />
+            </Grid>
             <Grid item xs={12} container justifyContent="center">
               <Button
                 variant="contained"

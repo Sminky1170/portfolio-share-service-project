@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import * as Api from "../../api";
@@ -10,10 +9,6 @@ function CertificateCard({
   setIsEditing,
   setCertificates,
 }) {
-  useEffect(() => {
-    console.log(certificate);
-  }, [certificate]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,8 +34,6 @@ function CertificateCard({
             </Typography>
             <Typography variant="subtitle1">
               발급일 : {formatDate(certificate.issue_date)}
-              <br />
-              만료일 : {formatDate(certificate.expiration_date)}
             </Typography>
           </Grid>
           {isEditable && (

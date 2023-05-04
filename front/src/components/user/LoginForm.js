@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Box, TextField, Button, Typography } from "@mui/material";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -9,12 +9,12 @@ function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
-  //useState로 email 상태를 생성함.
+  // useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
+  // useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
 
-  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
+  // 이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
     return email
       .toLowerCase()
@@ -23,11 +23,11 @@ function LoginForm() {
       );
   };
 
-  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
+  // 위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
   const isPasswordValid = password.length >= 4;
-  //
+
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const isFormValid = isEmailValid && isPasswordValid;
 
@@ -56,62 +56,80 @@ function LoginForm() {
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      alert("로그인에 실패하였습니다.");
     }
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-5">
-        <Col lg={8}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="loginEmail">
-              <Form.Label>이메일 주소</Form.Label>
-              <Form.Control
-                type="email"
-                autoComplete="on"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {!isEmailValid && (
-                <Form.Text className="text-success">
-                  이메일 형식이 올바르지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "2rem",
+        }}
+      >
+        <Typography variant="h5">로그인</Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            width: "100%",
+            marginTop: 1,
+          }}
+        >
+          <TextField
+            label="이메일 주소"
+            type="email"
+            autoComplete="on"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+            error={!isEmailValid && email !== ""}
+            helperText={
+              !isEmailValid &&
+              email !== "" &&
+              "이메일 형식이 올바르지 않습니다."
+            }
+          />
 
-            <Form.Group controlId="loginPassword" className="mt-3">
-              <Form.Label>비밀번호</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="on"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {!isPasswordValid && (
-                <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+          <TextField
+            label="비밀번호"
+            type="password"
+            autoComplete="on"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+            error={!isPasswordValid && password !== ""}
+            helperText={
+              !isPasswordValid &&
+              password !== "" &&
+              "비밀번호는 4글자 이상입니다."
+            }
+          />
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" disabled={!isFormValid}>
-                  로그인
-                </Button>
-              </Col>
-            </Form.Group>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!isFormValid}
+            sx={{ mt: 2, width: "100%" }}
+          >
+            로그인
+          </Button>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/register")}>
-                  회원가입하기
-                </Button>
-              </Col>
-            </Form.Group>
-          </Form>
-        </Col>
-      </Row>
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/register")}
+            sx={{ mt: 1, width: "100%" }}
+          >
+            회원가입하기
+          </Button>
+        </Box>
+      </Box>
     </Container>
   );
 }

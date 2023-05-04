@@ -1,21 +1,9 @@
-import { useState, useEffect } from "react";
 import * as Api from "../../api";
 import formatDate from "../../util/formatDate";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Card, CardContent, Typography, Grid, IconButton } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
 function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
-  useEffect(() => {
-    console.log(award);
-  }, [award]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,7 +23,6 @@ function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
           <Grid item xs={isEditable ? 9 : 12}>
             <Typography variant="h6">{award.title}</Typography>
             <Typography variant="subtitle1">
-              {" "}
               주최기관 : {award.organization}
             </Typography>
             <Typography variant="subtitle1">

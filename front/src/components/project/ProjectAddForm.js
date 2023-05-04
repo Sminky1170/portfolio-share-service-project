@@ -6,6 +6,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [title, setTitle] = useState("");
   const [start_date, setStart_Date] = useState("");
   const [end_date, setEnd_Date] = useState("");
+  const [description, setDescription] = useState("");
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -18,6 +19,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         title,
         start_date: new Date(start_date),
         end_date: new Date(end_date),
+        description,
       });
 
       const createdProject = res.data;
@@ -71,6 +73,16 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
                   max: today,
                   min: start_date || undefined,
                 }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="프로젝트 내용"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                multiline
+                rows={4}
               />
             </Grid>
             <Grid item xs={12} className="mt-3 text-center">

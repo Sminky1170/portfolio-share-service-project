@@ -10,7 +10,6 @@ function CertificateAddForm({
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const [issueDate, setIssueDate] = useState("");
-  const [expirationDate, setExpirationDate] = useState("");
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -23,7 +22,6 @@ function CertificateAddForm({
         name,
         organization,
         issue_date: new Date(issueDate),
-        expiration_date: new Date(expirationDate),
       });
 
       const createdCertificate = res.data;
@@ -59,7 +57,7 @@ function CertificateAddForm({
                 onChange={(e) => setOrganization(e.target.value)}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="자격증 발급일"
@@ -70,23 +68,7 @@ function CertificateAddForm({
                   shrink: true,
                 }}
                 inputProps={{
-                  max: expirationDate || today,
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="자격증 만료일"
-                type="date"
-                value={expirationDate}
-                onChange={(e) => setExpirationDate(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
                   max: today,
-                  min: issueDate || undefined,
                 }}
               />
             </Grid>
