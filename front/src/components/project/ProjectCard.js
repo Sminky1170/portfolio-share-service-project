@@ -31,7 +31,11 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects }) {
               <br />
             </Typography>
             <Typography variant="subtitle1">
-              프로젝트 내용 : {project.description}
+              프로젝트 내용 :
+              <br />
+              <span style={{ whiteSpace: "pre-line" }}>
+                {project.description}
+              </span>
             </Typography>
           </Grid>
           {isEditable && (

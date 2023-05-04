@@ -79,7 +79,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             </Typography>
             <Box sx={{ height: "5rem", overflow: "hidden" }}>
               <Typography variant="body2" color="text.secondary">
-                {user?.description}
+                <span style={{ whiteSpace: "pre-line" }}>
+                  {user?.description}
+                </span>
               </Typography>
             </Box>
 
