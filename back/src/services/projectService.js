@@ -61,7 +61,7 @@ class projectService {
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
-      project = await Project.update({ user_id, fieldToUpdate, newValue });
+      project = await Project.update({ project_id, fieldToUpdate, newValue });
     }
 
     project.errorMessage = null;
