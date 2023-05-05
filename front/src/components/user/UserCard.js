@@ -9,6 +9,7 @@ import { useState, useContext } from "react";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import { keyframes } from "@emotion/react";
+import getRandomImage from "../../util/getRandomImage";
 
 const popAnimation = keyframes`
   0% {
@@ -60,7 +61,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           <CardMedia
             component="img"
             height="140"
-            image={user?.image || "http://placekitten.com/200/200"}
+            image={user?.image || getRandomImage(user.id)}
             alt="사용자 프로필 사진"
             sx={{
               borderRadius: "50%",
