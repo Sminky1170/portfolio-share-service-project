@@ -39,7 +39,7 @@ yarn start
 4.  백엔드 서버 실행
 ```bash
 cd back
-mongodb서버구축축 관련 back 폴더 내부 README 참고
+mongodb서버구축 관련 back 폴더 내부 README 참고
 ```
 
 ## 팀원
