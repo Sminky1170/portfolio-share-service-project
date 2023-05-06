@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jest": "^27.3.1",
+    "joi": "^17.9.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
     "sudo": "^1.0.3",
@@ -38,7 +39,7 @@
     "@babel/preset-env": "^7.16.4",
     "babel-cli": "^6.26.0",
     "dotenv": "^16.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.22"
   },
   "jest": {
     "testEnvironment": "node",
@@ -48,5 +49,6 @@
     "modulePathIgnorePatterns": [
       "__config__"
     ]
-  }
+  },
+  "type": "module"
 }

@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import { Button, TextField, Grid, Card, CardContent, Box } from "@mui/material";
 
 function CertificateAddForm({
   portfolioOwnerId,
   setCertificates,
   setIsAdding,
 }) {
-  //useState로 학교이름(school) 상태를 생성함.
   const [name, setName] = useState("");
-  //useState로 전공(major) 상태를 생성함.
   const [organization, setOrganization] = useState("");
-  //useState로  학위(degree)상태를 생성함.
   const [issueDate, setIssueDate] = useState("");
-  const [expirationDate, setExpirationDate] = useState("");
+
+  const today = new Date().toISOString().split("T")[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +22,6 @@ function CertificateAddForm({
         name,
         organization,
         issue_date: new Date(issueDate),
-        expiration_date: new Date(expirationDate),
       });
 
       const createdCertificate = res.data;
@@ -41,58 +38,60 @@ function CertificateAddForm({
 
   return (
     <Card className="mb-2">
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="자격증명을 입력하세요."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Control
-              type="?"
-              placeholder="발급기관"
-              value={organization}
-              onChange={(e) => setOrganization(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Row>
-              <Col md="6">
-                <Form.Control
-                  type="date"
-                  placeholder="자격증 발급일 yyyy-mm-dd"
-                  value={issueDate}
-                  onChange={(e) => setIssueDate(e.target.value)}
-                />
-              </Col>
-              <Col md="6">
-                <Form.Control
-                  type="date"
-                  placeholder="자격증 만료일 yyyy-mm-dd"
-                  value={expirationDate}
-                  onChange={(e) => setExpirationDate(e.target.value)}
-                />
-              </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+      <CardContent>
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="자격증명"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="발급기관"
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="자격증 발급일"
+                type="date"
+                value={issueDate}
+                onChange={(e) => setIssueDate(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  max: today,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} className="mt-3 text-center">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className="me-3"
+              >
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsAdding(false)}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => setIsAdding(false)}
+              >
                 취소
               </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      </Card.Body>
+            </Grid>
+          </Grid>
+        </Box>
+      </CardContent>
     </Card>
   );
 }

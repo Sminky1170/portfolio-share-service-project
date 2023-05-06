@@ -58,14 +58,17 @@ function App() {
       <UserStateContext.Provider value={userState}>
         <Router>
           <Header />
-          <Routes>
-            <Route path="/" exact element={<Portfolio />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/users/:userId" element={<Portfolio />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="*" element={<Portfolio />} />
-          </Routes>
+          {/* 헤더 아래 공백 추가 */}
+          <div style={{ paddingTop: "64px" }}>
+            <Routes>
+              <Route path="/" exact element={<Portfolio />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/users/:userId" element={<Portfolio />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="*" element={<Portfolio />} />
+            </Routes>
+          </div>
         </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>

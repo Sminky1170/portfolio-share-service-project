@@ -1,4 +1,4 @@
-import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
@@ -97,12 +97,6 @@ class userAuthService {
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
-    if (toUpdate.password) {
-      const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
-      user = await User.update({ user_id, fieldToUpdate, newValue });
-    }
-
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
@@ -110,6 +104,30 @@ class userAuthService {
     }
 
     return user;
+  }
+
+  static async addLike({ user_id, pressLikeUserId }) {
+    const likeInfo = await User.findById({ user_id });
+    if (!likeInfo) {
+      const errorMessage =
+        "해당 id의 사용자는 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const AddLike = await User.addLike({ user_id, pressLikeUserId });
+    return AddLike;
+  }
+
+  static async deleteLike({ user_id, pressLikeUserId }) {
+    const likeInfo = await User.findById({ user_id });
+    if (!likeInfo) {
+      const errorMessage =
+        "해당 id의 사용자는 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    const DeleteLike = await User.deleteLike({ user_id, pressLikeUserId });
+    return DeleteLike;
   }
 
   static async getUserInfo({ user_id }) {

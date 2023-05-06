@@ -1,11 +1,11 @@
 import cors from "cors";
 import express from "express";
-import { userAuthRouter } from "./routers/userRouter";
-import { educationRouter } from "./routers/educationRouter";
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { userAuthRouter } from "./routers/userRouter.js";
+import { educationRouter } from "./routers/educationRouter.js";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import { certificateRouter } from "./routers/certificateRouter.js";
-import { projectRouter } from "./routers/projectRouter";
-import { awardRouter } from "./routers/awardRouter";
+import { projectRouter } from "./routers/projectRouter.js";
+import { awardRouter } from "./routers/awardRouter.js";
 const app = express();
 
 // CORS 에러 방지

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AwardCard from "./AwardCard";
 import AwardEditForm from "./AwardEditForm";
-import * as Api from "../../api";
 
-function Award({ awardId, award, setAwards, isEditable }) {
+function Award({ award, setAwards, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       {isEditing ? (
         <AwardEditForm
-          awardId={awardId}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           award={award}
@@ -18,7 +16,6 @@ function Award({ awardId, award, setAwards, isEditable }) {
         />
       ) : (
         <AwardCard
-          awardId={awardId}
           award={award}
           isEditable={isEditable}
           setIsEditing={setIsEditing}

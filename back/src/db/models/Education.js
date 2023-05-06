@@ -1,4 +1,4 @@
-import { EducationModel } from "../schemas/education";
+import { EducationModel } from "../schemas/education.js";
 
 // Education 클래스
 class Education {
@@ -31,11 +31,8 @@ class Education {
     );
     return updatedEducation;
   }
-  static async delete({ education_id }) {
-    const deletedEducation = await EducationModel.deleteOne({
-      id: education_id,
-    });
-    console.log(deletedEducation);
+  static async deleteById({ education_id }) {
+    const deletedEducation = await EducationModel.deleteOne({ id: education_id });
     const isCompleteDeleted = deletedEducation.deletedCount === 1;
     return isCompleteDeleted;
   }

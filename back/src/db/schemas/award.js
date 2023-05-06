@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
 const AwardSchema = new Schema(
   {
@@ -19,7 +20,7 @@ const AwardSchema = new Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
   },

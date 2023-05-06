@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
 const ProjectSchema = new Schema(
   {
@@ -21,6 +22,11 @@ const ProjectSchema = new Schema(
     end_date: {
       type: Date,
       required: true,
+    },
+    description:{
+      type: String,
+      required: false,
+      default: "none",
     },
   },
   {

@@ -32,21 +32,21 @@ class Project {
   }
 
   // project_id에 해당하는 프로젝트 정보를 삭제하는 메서드
-  static async delete({ project_id }) {
+  static async deleteById({ project_id }) {
     // id가 project_id인 프로젝트 정보를 찾아서 삭제하고, 삭제한 프로젝트 정보를 반환한다.
     const deletedProject = await ProjectModel.deleteOne({ id: project_id });
-    console.log(deletedProject);
     const isCompleteDeleted = deletedProject.deletedCount === 1;
     return isCompleteDeleted;
   }
 
   // 추가! obj정보가 포함된 정보를 반환해주는 함수 (하나의 정보만 반환)
-  static async findByObj({ user_id, title, start_date, end_date }) {
+  static async findByObj({ user_id, title, start_date, end_date, description }) {
     const findProject = await ProjectModel.findOne({
       user_id,
       title,
       start_date,
       end_date,
+      description
     });
     return findProject;
   }

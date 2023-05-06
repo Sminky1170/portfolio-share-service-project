@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
-import * as Api from "../../api";
 
-function Education({ educationId, education, setEducations, isEditable }) {
+function Education({ education, setEducations, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       {isEditing ? (
         <EducationEditForm
-          educationId={educationId}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           education={education}
@@ -18,7 +16,6 @@ function Education({ educationId, education, setEducations, isEditable }) {
         />
       ) : (
         <EducationCard
-          educationId={educationId}
           education={education}
           isEditable={isEditable}
           setIsEditing={setIsEditing}

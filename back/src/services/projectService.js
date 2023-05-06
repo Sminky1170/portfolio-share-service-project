@@ -2,10 +2,16 @@ import { User, Project } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 
 class projectService {
-  static async addProject({ user_id, title, start_date, end_date }) {
+  static async addProject({
+    user_id,
+    title,
+    start_date,
+    end_date,
+    description,
+  }) {
     // DB에 해당 user_id가 존재할 경우,
     // 먼저, DB에서 해당 유저의 프로젝트 정보를 확인해서, 만약 추가하려는 프로젝트 정보가 이미 DB에 존재할 경우
-    const obj = { user_id, title, start_date, end_date };
+    const obj = { user_id, title, start_date, end_date, description };
 
     const find_project = await Project.findByObj(obj);
     if (find_project) {
@@ -58,13 +64,18 @@ class projectService {
       project = await Project.update({ project_id, fieldToUpdate, newValue });
     }
 
+    if (toUpdate.description) {
+      const fieldToUpdate = "description";
+      const newValue = toUpdate.description;
+      project = await Project.update({ project_id, fieldToUpdate, newValue });
+    }
+
     project.errorMessage = null;
     return project;
   }
 
   static async deleteProject({ project_id }) {
-    let isDeleted = await Project.delete({ project_id });
-    console.log(isDeleted);
+    let isDeleted = await Project.deleteById({ project_id });
     if (!isDeleted) {
       const errorMessage = "삭제할 프로젝트 정보가 없습니다.";
       return { errorMessage };

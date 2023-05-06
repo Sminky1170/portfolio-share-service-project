@@ -7,9 +7,8 @@ class certificateService {
     name,
     organization,
     issue_date,
-    expiration_date,
   }) {
-    const obj = { user_id, name, organization, issue_date, expiration_date };
+    const obj = { user_id, name, organization, issue_date };
 
     const find_certificate = await Certificate.findByObj(obj);
 
@@ -76,23 +75,12 @@ class certificateService {
         newValue,
       });
     }
-
-    if (toUpdate.expiration_date) {
-      const fieldToUpdate = "expiration_date";
-      const newValue = toUpdate.expiration_date;
-      certificate = await Certificate.update({
-        certificate_id,
-        fieldToUpdate,
-        newValue,
-      });
-    }
     certificate.errorMessage = null;
     return certificate;
   }
 
   static async deleteCertificate({ certificate_id }) {
-    let isDeleted = await Certificate.delete({ certificate_id });
-    console.log(isDeleted);
+    let isDeleted = await Certificate.deleteById({ certificate_id });
     if (!isDeleted) {
       const errorMessage = "삭제할 자격증 정보가 없습니다.";
       return { errorMessage };

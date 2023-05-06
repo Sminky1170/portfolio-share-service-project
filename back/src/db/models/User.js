@@ -1,4 +1,4 @@
-import { UserModel } from "../schemas/user";
+import { UserModel } from "../schemas/user.js";
 
 class User {
   static async create({ newUser }) {
@@ -32,6 +32,30 @@ class User {
       option
     );
     return updatedUser;
+  }
+
+  static async addLike({ user_id, pressLikeUserId }) {
+    const filter = { id: user_id };
+    const update = {
+      $inc: { likeCount: 1 },
+      $addToSet: { likeUsers: pressLikeUserId },
+    };
+    const option = { returnOriginal: false };
+
+    const AddLike = await UserModel.findOneAndUpdate(filter, update, option);
+    return AddLike;
+  }
+
+  static async deleteLike({ user_id, pressLikeUserId }) {
+    const filter = { id: user_id };
+    const update = {
+      $inc: { likeCount: -1 },
+      $pull: { likeUsers: pressLikeUserId },
+    };
+    const option = { returnOriginal: false };
+
+    const DeleteLike = await UserModel.findOneAndUpdate(filter, update, option);
+    return DeleteLike;
   }
 }
 

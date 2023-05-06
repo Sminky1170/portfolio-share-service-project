@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import pkg from 'mongoose';
+const { Schema, model } = pkg;
 
 const CertificateSchema = new Schema(
   {
@@ -19,10 +20,6 @@ const CertificateSchema = new Schema(
       required: true,
     },
     issue_date: {
-      type: Date,
-      required: true,
-    },
-    expiration_date: {
       type: Date,
       required: true,
     },

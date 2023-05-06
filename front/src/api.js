@@ -1,5 +1,7 @@
 import axios from "axios";
 
+console.log("Hello World!");
+
 const backendPortNumber = "5001";
 const serverUrl =
   "http://" + window.location.hostname + ":" + backendPortNumber + "/";

@@ -1,4 +1,4 @@
-import { AwardModel } from "../schemas/award";
+import { AwardModel } from "../schemas/award.js";
 
 class Award {
   static async createAward({ newAward }) {
@@ -23,9 +23,8 @@ class Award {
     );
     return updatedAward;
   }
-  static async delete({ award_id }) {
+  static async deleteById({ award_id }) {
     const deletedAward = await AwardModel.deleteOne({ id: award_id });
-    console.log(deletedAward);
     const isCompleteDeleted = deletedAward.deletedCount === 1;
     return isCompleteDeleted;
   }
